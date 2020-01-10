@@ -685,8 +685,6 @@ Input: ["dog","racecar","car"]
 Output: ""
 Explanation: There is no common prefix among the input strings.
 
-*/
-
 function longestcomprefix(arr){
     if(arr.length<2){return arr.join("")}
     arr.sort((a,b)=>a.length-b.length)
@@ -719,3 +717,98 @@ function longestcomprefix(arr){
 
 let array1= ["acc","aaa","aaba"]
 console.log('longestcomprefix', longestcomprefix(array1))
+*/
+
+
+/**7. Reverse Integer 
+function reverse(x){
+    let str
+    let num
+     if(x.toString().startsWith("-")){
+         str=x.toString().slice(1)
+         console.log("x",x)
+         str=helper(str)
+         num=Number(("-"+str))
+         console.log("3333",num)
+     }
+     else{
+        str=helper(str)
+        num=Number(str)
+     }
+     if(num>2**31-1 || num< (2**31*-1)){
+         return 0
+     }
+     return num
+}
+
+function helper(str){
+    str=str.split('').reverse().join('')
+    if(str.startsWith("0")){
+        let i=0
+        while(i<str.length && str[i]==="0"){
+            i++
+        }
+        str=str.slice(i)
+    }
+    console.log("return",str)
+   return str
+}
+
+let number1=-1230
+console.log("reverse",reverse(number1))
+ */
+
+
+/**8. String to Integer (atoi) 就是JavaScript的parseint*/
+var myAtoi = function(str) {
+    str= str.trim()
+    let res=[]
+    let resstr
+    if(str.length<2 && str.startsWith("-")){return 0}
+    if(str.length<2 && str.startsWith("+")){return 0}
+   if(!isNaN(str[0])){ 
+       for(i=1;i<str.length;i++){
+       if(isNaN(str[i])){ break}
+       res.push(str[i])
+    }
+
+      resstr=Number(str[0]+res.join(''))
+    }
+   else if(str.startsWith("-")||str.startsWith("+")){
+     for(i=1;i<str.length;i++){
+        if(isNaN(str[i])){ break}
+        res.push(str[i])
+    }
+
+      resstr=Number(str[0]+res.join(''))
+      if(isNaN(resstr)){
+          return 0
+          
+    }
+      console.log(resstr)
+   }
+   if(resstr<2**31*-1 ){return 2**31*-1 }
+   else if( resstr>2**31-1){return 2**31-1 }
+   return resstr
+
+
+// //     let res=[]
+// //    for(i=0;i<str.length;i++){
+// //        reg=/[0-9]/g
+// //        if(isNaN(str[i]) && str[i]!=="-"&&str[i]!=="+"){ break }
+// //        else{
+
+// //            if (str[i].match(reg) || str[i]==="-"|| str[i]==="+"){
+// //            res.push(str[i])
+          
+// //         } }  
+//    }
+//    res=Number(res.join(''))
+//    if(res<2**31*-1 ){return 2**31*-1 }
+//    else if( res>2**31-1){return 2**31-1 }
+//    return Math.floor(res)
+
+    
+};
+let string2="+-22"
+console.log(myAtoi(string2))
