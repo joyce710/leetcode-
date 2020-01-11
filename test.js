@@ -759,56 +759,198 @@ console.log("reverse",reverse(number1))
  */
 
 
-/**8. String to Integer (atoi) 就是JavaScript的parseint*/
+/**8. String to Integer (atoi) 就是JavaScript的parseint
 var myAtoi = function(str) {
     str= str.trim()
     let res=[]
+    let regex=/[0-9]/g
     let resstr
-    if(str.length<2 && str.startsWith("-")){return 0}
-    if(str.length<2 && str.startsWith("+")){return 0}
-   if(!isNaN(str[0])){ 
-       for(i=1;i<str.length;i++){
-       if(isNaN(str[i])){ break}
-       res.push(str[i])
+
+    if(isNaN(str[0]) && str.length>1){
+        if(str[0]==="+" ||str[0]==="-" ){
+            console.log('str[i', str[0])
+            if(!str[1].match(regex)){return 0}
+            for(i=1;i<str.length;i++){
+                console.log('str[i', str[i])
+                if(!str[i].match(regex)){ break}
+                res.push(str[i])
+                console.log('res', )
+             }
+             resstr=Number(str[0]+res.join(''))
+         }
+         else{return 0}
+    }
+    else{
+        for(i=0;i<str.length;i++){
+            if(!str[i].match(regex)){break}
+            res.push(str[i])
+            console.log('res',res)
+         }
+         resstr=Number(res.join(''))
     }
 
-      resstr=Number(str[0]+res.join(''))
-    }
-   else if(str.startsWith("-")||str.startsWith("+")){
-     for(i=1;i<str.length;i++){
-        if(isNaN(str[i])){ break}
-        res.push(str[i])
-    }
-
-      resstr=Number(str[0]+res.join(''))
-      if(isNaN(resstr)){
-          return 0
-          
-    }
       console.log(resstr)
-   }
    if(resstr<2**31*-1 ){return 2**31*-1 }
    else if( resstr>2**31-1){return 2**31-1 }
    return resstr
 
-
-// //     let res=[]
-// //    for(i=0;i<str.length;i++){
-// //        reg=/[0-9]/g
-// //        if(isNaN(str[i]) && str[i]!=="-"&&str[i]!=="+"){ break }
-// //        else{
-
-// //            if (str[i].match(reg) || str[i]==="-"|| str[i]==="+"){
-// //            res.push(str[i])
-          
-// //         } }  
-//    }
-//    res=Number(res.join(''))
-//    if(res<2**31*-1 ){return 2**31*-1 }
-//    else if( res>2**31-1){return 2**31-1 }
-//    return Math.floor(res)
-
     
 };
-let string2="+-22"
-console.log(myAtoi(string2))
+
+// 或者直接用parseInt 
+function myAtoiparseInt(str){
+    str=str.trim()
+    console.log('str', str)
+   let number=parseInt(str)
+   console.log('num', number)
+   if(isNaN(number)){return 0}
+   if(number<2**31*-1 ){return 2**31*-1 }
+   else if( number>2**31-1){return 2**31-1 }
+   return number
+
+}
+
+let string2="4193 with words"
+console.log(myAtoiparseInt(string2))
+
+*/
+
+/** 15. 3Sum
+
+Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+Note:
+
+The solution set must not contain duplicate triplets.
+
+Example:
+
+Given array nums = [-1, 0, 1, 2, -1, -4],
+
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+var threeSum = function(nums) {
+    if(nums.length<2){
+        console.log(nums.length,nums)
+        return []}
+   
+    let res=[]
+    nums.sort((a,b)=>a-b)
+    console.log('2@@@@nums', nums)
+    for(let i=0;i<nums.length;i++){
+        console.log('i', i,nums[i])
+       
+        let l=i+1;
+        let r=nums.length-1
+        let target=-nums[i]
+        while(l<r){
+            if(nums[l]+nums[r]===target){
+                console.log('tarfet', target,nums[l],nums[r])
+                console.log('L,,R', nums[i],nums[l],nums[r])
+               
+                res.push([nums[i],nums[l],nums[r]])
+                l++;
+                r--
+                console.log('L,,R', nums[i],nums[l],nums[r])
+                while(nums[l]===nums[l-1] && l<r){ 
+                    console.log('numsl', nums[l]) 
+                     l++}
+                while(nums[r]===nums[r+1] && l<r) {r--}
+                console.log("res", res)
+            }
+            // console.log('L,33,R33', target,nums[i],nums[l],nums[r])
+            // console.log('L22,,R222', target,nums[l],nums[r])
+            else if(nums[l]+nums[r]<target){
+                l++
+            }
+            else if(nums[l]+nums[r]>target){ r-- }
+        }
+        while(nums[i]===nums[i+1]){i++}
+    }
+    return res
+};
+
+let nums2 = [-2,0,0,2,2]
+console.log("threeSum323",threeSum(nums2))
+*/
+
+
+
+/** 
+16. 3Sum Closest
+Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+
+Example:
+
+Given array nums = [-1, 2, 1, -4], and target = 1.
+
+The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+
+*/
+
+var threeSumClosest= function(nums,target){
+    nums.sort((a,b)=>a-b)
+    let res
+    let mindif=Infinity
+    for(let i=0;i<nums.length;i++){
+        let dif
+        let l=i+1
+        let r=nums.length-1
+        while(l<r){
+        let sum=nums[i]+nums[r]+nums[l]
+            if(sum===target){
+                return sum
+            }
+            else if(sum<target){
+                dif=Math.abs(sum-target)
+                l++
+            }
+            else{
+                dif=Math.abs(sum-target)
+                r--
+            }
+            if(dif<mindif){
+                mindif=dif
+                res=sum
+            }
+       }
+    }
+    return res
+}
+
+let nums=[-1,2,1,-4]
+
+console.log('threeSumClosest', threeSumClosest(nums,1))
+
+
+var isValid=function(str){
+
+    let stack=[]
+    let map=new Map
+    map.set("(",")")
+       .set("[","]")
+       .set("{","}")
+       console.log('map', map)
+    for(let i=0;i<str.length;i++){
+        console.log('str[i', str[i])
+        console.log('stackoriginal', stack)
+        if(map.has(str[i])){
+            stack.push(str[i])
+
+        }
+        else{
+            let poped=stack.pop()
+            if(str[i] !== map.get(poped))
+               {return false}
+            console.log('stackpop', poped)
+            // stack.pop()
+          
+        }
+        console.log('stackafterPop', stack)
+    }
+    return stack.length===0
+}
+console.log('isValid', isValid("[()([])]"))
