@@ -1047,3 +1047,39 @@ function Combination(num){
  
 console.log(Combination, Combination(""))
 */
+/**
+ *22. Generate Parentheses
+
+Share
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+For example, given n = 3, a solution set is:
+
+[
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
+ */
+function GenerateParentheses(n){
+    let res=[]
+    helper("(",n-1,n)
+    
+    function helper(prefix,open,close){
+        console.log(prefix)
+        if(close===0&& open===0){
+            res.push(prefix)
+        }
+        if(open<close){
+            helper(prefix+')',open,close-1)
+        }
+        if(open){
+            helper(prefix+'(',open-1,close)
+        }
+
+    }
+    return res
+}
+console.log(GenerateParentheses(3))
