@@ -889,7 +889,7 @@ Given array nums = [-1, 2, 1, -4], and target = 1.
 
 The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
 
-*/
+
 
 var threeSumClosest= function(nums,target){
     nums.sort((a,b)=>a-b)
@@ -954,3 +954,96 @@ var isValid=function(str){
     return stack.length===0
 }
 console.log('isValid', isValid("[()([])]"))
+ */
+/** 
+19. Remove Nth Node From End of List
+
+Share
+Given a linked list, remove the n-th node from the end of list and return its head.
+
+Example:
+
+Given linked list: 1->2->3->4->5, and n = 2.
+
+After removing the second node from the end, the linked list becomes 1->2->3->5.
+Note:
+
+Given n will always be valid.
+
+*/
+function ListNode(val){
+    this.val=val;
+    this.next=null
+    return val
+}
+head=ListNode(3)
+console.log(typeof(head))
+function RemoveNode(head,n){
+    let len=0
+   while(head.next !=null){
+       head=head.next
+       len+=1
+   }
+
+}
+
+
+
+
+
+
+/**17. Letter Combinations of a Phone Number
+Medium
+
+2973
+
+357
+
+Add to List
+
+Share
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
+
+A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+function Combination(num){
+    let len=num.length
+    if(num.length<1){return []}
+    console.log('len', len)
+    let map= new Map
+    map.set("1","")
+       .set("2","abc")
+       .set("3","def")
+       .set("4","ghi")
+       .set("5","jkl")
+       .set("6","mno")
+       .set("7","pqrs")
+       .set("8","tuv")
+       .set("9","wxyz")
+    let res=[]
+    helper(map,"",num,0)
+    function helper(map,temp,num,index){
+    if(temp.length===num.length ){  
+        res.push(temp)    
+    }
+    else{
+       
+        let tempstr=map.get(num[index])
+       
+        for(let i=0;i< tempstr.length ;i++){
+          console.log('i', i)
+            temp=temp+tempstr[i]
+        
+            helper(map,temp,num,index+1)
+            temp=temp.slice(0,temp.length-1)
+           
+          
+        }
+        
+     }
+
+    }
+    return res
+}
+ 
+console.log(Combination, Combination(""))
+*/
