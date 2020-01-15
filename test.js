@@ -1062,7 +1062,7 @@ For example, given n = 3, a solution set is:
   "()(())",
   "()()()"
 ]
- */
+
 function GenerateParentheses(n){
     let res=[]
     helper("(",n-1,n)
@@ -1083,3 +1083,224 @@ function GenerateParentheses(n){
     return res
 }
 console.log(GenerateParentheses(3))
+ */
+
+
+
+/**
+ 24. Swap Nodes in Pairs
+Given a linked list, swap every two adjacent nodes and return its head.
+
+You may not modify the values in the list's nodes, only nodes itself may be changed.
+
+Example:
+
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+ */
+
+ /**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/** 
+26. Remove Duplicates from Sorted Array
+
+Share
+Given a sorted array nums, remove the duplicates in-place such that each element appear only once and return the new length.
+
+Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+
+Example 1:
+
+Given nums = [1,1,2],
+
+Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively.
+
+It doesn't matter what you leave beyond the returned l
+
+
+var removeDuplicates = function(nums) {
+    
+ 
+   let low=0
+   let fast=1
+   while(fast<nums.length){
+       if(nums[low]===nums[fast]){
+           fast++
+       }
+       else{
+           low+=1
+           nums[low]=nums[fast]
+           fast++
+           console.log("slow",low,nums[low])
+       }
+      console.log("fast",fast,nums[fast])
+   }
+   return low+1
+};
+let num4=[0,0,1,1,1,2,2,3,3,4]
+console.log('removeDuplicates', removeDuplicates(num4))
+console.log('num', num4)
+
+var removeDuplicates2 = function(nums) {
+    
+   for(let i=0;i<nums.length;i++){
+       if(nums[i]===nums[i+1]){
+           
+       }
+   }
+ };
+*/
+
+//  var removeDuplicates3 = function(nums) {
+//     for (let i = 0; i <= nums.length - 1; i++) {
+//         console.log('len', nums.length,i)
+//         while (nums[i] === nums[i+1]) {
+//             if ((nums[i] === nums[i+1])) {
+//                 console.log('nums[i', i,nums[i],nums[i+1])
+//                 // Romove '1' element at index position 'i'
+//                 nums.splice(i, 1);
+//                 console.log('NUM', nums.length)
+//             }
+//         }
+//     }
+//     return nums.length;
+// };
+// ??????????????num不会变吗?
+// console.log('Duplicates', removeDuplicates3(num4))
+// console.log('num', num4)
+
+/**27. Remove Element
+
+Given an array nums and a value val, remove all instances of that value in-place and return the new length.
+
+Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+
+The order of elements can be changed. It doesn't matter what you leave beyond the new length.
+
+Example 1:
+
+Given nums = [3,2,2,3], val = 3,
+
+Your function should return length = 2, with the first two elements of nums being 2.
+
+It doesn't matter what you leave beyond the returned length. 
+
+function Removelement(nums,val){
+ //num的长度是会改变,但这个循环里nu.length不会改变了,这已经是一个数了
+    for(let i=0;i<nums.length+1;){
+        console.log('len', nums.length)
+        if(nums[i]==val){
+            nums.splice(i,1)
+            console.log('nums[i', i,nums[i],nums)
+            
+        }
+        else{
+            i++
+        }
+    }
+   return nums
+
+}
+let num5=[0,1,2,2,3,0,4,2,5,6]
+console.log('Removelement', Removelement(num5,2))
+
+
+function Removelement2(nums,val){
+    let start=0
+    for(let i=0;i<nums.length;i++){
+        if(nums[i] != val){
+            nums[start]=nums[i]
+            start++
+        }
+    }
+    return start
+}
+console.log('Removelement2', Removelement2(num5,2),num5)
+*/
+
+/** 
+ * 28. Implement strStr()
+
+Implement strStr().
+
+Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+Example 1:
+
+Input: haystack = "hello", needle = "ll"
+Output: 2
+
+function  strStr(haystack, needle){
+    needle_len=needle.length
+    console.log('len', needle_len)
+    for(let i=0;i<haystack.length;i++){
+        let start=i;
+        let end=i+needle_len
+        console.log('end', start,end)
+       console.log('substr', haystack.substring(start,end))
+        if(haystack.substring(start,end)===needle){
+            return start
+        }
+    }
+    return -1
+
+}
+let haystack = "aaaaa";
+let needle = "bba";
+console.log('strStr', strStr(haystack, needle))
+
+*/
+
+/** 29. Divide Two Integers
+Share
+Given two integers dividend and divisor, divide two integers without using multiplication, division and mod operator.
+
+Return the quotient after dividing dividend by divisor.
+
+The integer division should truncate toward zero.
+
+Example 1:
+
+Input: dividend = 10, divisor = 3
+Output: 3
+Example 2:
+
+Input: dividend = 7, divisor = -3
+Output: -2
+ */
+var divide = function(dividend, divisor) {
+    let finalSign=Math.sign(dividend)===Math.sign(divisor)?1:-1
+    console.log('sign', finalSign)
+    
+    dividend=Math.abs(dividend)
+    divisor=Math.abs(divisor)
+   let res= helper(dividend,divisor,0)
+   console.log('count', res)
+   return finalSign*res
+
+};
+function helper(dividend,divisor,count){
+     if(dividend-divisor<0){
+        console.log('dividend<0', dividend,divisor,count)
+        console.log('count',count)
+        return count
+        //return count
+     }
+     else{
+        dividend=dividend-divisor
+        count+=1
+        console.log('dividend', dividend,count)
+         helper(dividend,divisor,count)
+     }
+
+}
+
+
+let dividend = 7
+let divisor = -3
+console.log('divide', divide(dividend,divisor))
+console.log('helper', helper(7,3,0))
