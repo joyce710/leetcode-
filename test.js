@@ -1034,11 +1034,8 @@ function Combination(num){
             temp=temp+tempstr[i]
         
             helper(map,temp,num,index+1)
-            temp=temp.slice(0,temp.length-1)
-           
-          
-        }
-        
+            temp=temp.slice(0,temp.length-1)   
+        }  
      }
 
     }
@@ -1273,34 +1270,36 @@ Input: dividend = 7, divisor = -3
 Output: -2
  */
 var divide = function(dividend, divisor) {
+    if (dividend <= -2147483648 && divisor==-1) return 2147483647;
+    if(divisor==-1){return -dividend}
+    if(divisor==1){return dividend}
     let finalSign=Math.sign(dividend)===Math.sign(divisor)?1:-1
-    console.log('sign', finalSign)
+  //  console.log('sign', finalSign)
     
     dividend=Math.abs(dividend)
     divisor=Math.abs(divisor)
    let res= helper(dividend,divisor,0)
-   console.log('count', res)
+   if(res<2**31*-1){return 2**31*-1 }
+   if(res>2**31-1){return 2**31-1}
    return finalSign*res
-
+   
 };
 function helper(dividend,divisor,count){
      if(dividend-divisor<0){
-        console.log('dividend<0', dividend,divisor,count)
-        console.log('count',count)
+        //console.log('dividend<0', dividend,divisor,count)
         return count
         //return count
      }
      else{
         dividend=dividend-divisor
         count+=1
-        console.log('dividend', dividend,count)
-         helper(dividend,divisor,count)
+       // console.log('dividend', dividend,count)
+         return helper(dividend,divisor,count)
      }
 
 }
 
 
-let dividend = 7
-let divisor = -3
+let dividend = 2147483647
+let divisor = 2
 console.log('divide', divide(dividend,divisor))
-console.log('helper', helper(7,3,0))
