@@ -970,7 +970,7 @@ Note:
 
 Given n will always be valid.
 
-*/
+
 function ListNode(val){
     this.val=val;
     this.next=null
@@ -986,6 +986,7 @@ function RemoveNode(head,n){
    }
 
 }
+*/
 
 
 
@@ -1271,7 +1272,7 @@ Example 2:
 
 Input: dividend = 7, divisor = -3
 Output: -2
- */
+ 
 var divide = function(dividend, divisor) {
     let finalSign=Math.sign(dividend)===Math.sign(divisor)?1:-1
     console.log('sign', finalSign)
@@ -1304,3 +1305,218 @@ let dividend = 7
 let divisor = -3
 console.log('divide', divide(dividend,divisor))
 console.log('helper', helper(7,3,0))
+
+var searchInsert = function(nums, target) {
+  for(let i=0;i<nums.length;i++){
+      if(nums[i]>=target){
+          return i
+
+      }
+  }
+  return nums.length
+    
+};
+
+
+var maxSubArray = function(nums) {
+    
+};
+
+*/
+/** 
+33. Search in Rotated Sorted Array
+Medium
+
+3532
+
+390
+
+Add to List
+
+Share
+Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+
+(i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).
+
+You are given a target value to search. If found in the array return its index, otherwise return -1.
+
+You may assume no duplicate exists in the array.
+
+Your algorithm's runtime complexity must be in the order of O(log n).
+*/
+/**这样写nums会被改变,但不能变,因为要返回原始index binarysearch 可以,但动的只能是指针,不能是nums这个
+ * 所以这个改一改的话就把search这个妇女单独拿出来写
+ */
+/*
+var search = function(begin,end,nums, target) {
+  
+
+    if(begin>end){return -1}
+    mid=Math.floor((begin+end)/2)
+    if(target===nums[mid]){return mid}
+    if(nums[begin]<nums[mid]){
+        //left is ascending
+       if(target <nums[begin]){
+           console.log('left is ascending', 'target in left',mid,end,nums[mid])
+           //target in right
+           //do bs in left
+           return search(mid,end,nums,target)
+         
+       }
+       else{
+           //do bs at right
+           console.log('left is ascending', 'target in right')
+           
+           return binarySearch(begin,mid,target,nums)
+       }
+    }
+    else{
+        //right is acending,let is mix
+        if(target<nums[mid]){
+            //target at left
+            //fdo search
+            console.log('right is ascending', 'target in left')
+            return search(begin,mid,nums,target)
+
+        }
+        else{
+            console.log('right is ascending', 'target in right',mid,end,nums[mid])
+            //target at right
+            //do bsf
+            return binarySearch(mid,end,target,nums)
+        }
+    }
+};
+function binarySearch(begin,end,target,nums){
+    console.log('bss', begin,end,target,nums)
+    if(begin> end ){return -1}
+    let mid=Math.floor((begin+end)/2)
+    console.log('num[mid', mid,nums[end],nums,nums.length)//????
+    console.log('mid66', mid,nums[mid],target)
+   if(target===nums[mid]){return mid}
+    if(target<nums[mid]){
+       return  binarySearch(begin,mid,target,nums)
+    }
+    else{
+       return  binarySearch(mid+1,end,target,nums)
+    }
+
+}
+
+let nums=[3,4,5,6,7,0,1,2]
+let target=7
+console.log('search', search (0,nums.length-1,nums, target))
+
+
+function SearchRotated(nums,target){
+     
+          let left=0;
+          let  r=nums.length-1
+         
+          while(left<=r){
+          let mid=Math.floor((left+r)/2)
+          if(nums[mid]===target){return mid}
+          if(nums[left]<=nums[mid]){
+              //left is ascending
+              if(nums[left]<=target &&target<=nums[mid]){
+                  //target  in left
+                  r=mid-1
+              }
+              else{
+                l=mid+1
+              }
+              
+          }
+          else{
+              //right is ascending
+              if(nums[mid]<=target &&target <=nums[r]){
+                  left=mid+1
+              }
+              else{
+                  r=mid-1
+              }
+          }
+          }
+          return -1
+
+}
+console.log('SearchRotated', SearchRotated (nums,target))
+
+*/
+/** 
+function IsFutureDate(dateVal) {
+    var Currentdate = new Date();
+        dateVal= dateVal.split("/");
+        console.log('dateval', dateVal)
+    var year = Currentdate.getFullYear();
+    let  curMonth = Currentdate.getMonth();
+    console.log('curMonth', curMonth)
+    if (year < dateVal[1]) {
+        return false;//future date
+
+    }        
+    else {
+        return true; //past date
+    }
+
+}
+console.log('teste', IsFutureDate("09/2013"))
+
+console.log(parseInt('5')< 4)
+
+const moonLanding = new Date('July 20, 69 00:20:18');
+
+console.log(moonLanding.getMonth()); // (January gives 0)
+
+*/
+
+
+/**
+ * 34. Find First and Last Position of Element in Sorted Array
+
+Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value.
+
+Your algorithm's runtime complexity must be in the order of O(log n).
+
+If the target is not found in the array, return [-1, -1].
+ */
+
+ var searchRange = function(nums, target) {
+
+    let start=0;
+    let end=nums.length-1
+   
+   
+   while(start<=end){
+    mid=Math.floor((start+end)/2)
+       console.log('startend', start,mid,end,nums[mid],target)
+        if(target===nums[mid]){
+           let start=mid
+           while(nums[start]===nums[mid]){
+               console.log('start', start)
+               start--
+           }
+           let end=mid+1
+           while(nums[end]===nums[mid]){
+               end++
+           }
+           return [start+1,end-1]
+        }
+        if(target<nums[mid]){
+          
+            end=mid-1
+        }
+        else{
+            console.log('left', '')
+            start=mid+1
+        }
+
+   }
+    return [-1,-1]
+};
+
+let nums0=[5,7,7,8,8,10]
+let target = 7
+
+
+console.log('searchRange', searchRange(nums0,target))
