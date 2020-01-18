@@ -1035,11 +1035,8 @@ function Combination(num){
             temp=temp+tempstr[i]
         
             helper(map,temp,num,index+1)
-            temp=temp.slice(0,temp.length-1)
-           
-          
-        }
-        
+            temp=temp.slice(0,temp.length-1)   
+        }  
      }
 
     }
@@ -1274,36 +1271,40 @@ Input: dividend = 7, divisor = -3
 Output: -2
  
 var divide = function(dividend, divisor) {
+    if (dividend <= -2147483648 && divisor==-1) return 2147483647;
+    if(divisor==-1){return -dividend}
+    if(divisor==1){return dividend}
     let finalSign=Math.sign(dividend)===Math.sign(divisor)?1:-1
-    console.log('sign', finalSign)
+  //  console.log('sign', finalSign)
     
     dividend=Math.abs(dividend)
     divisor=Math.abs(divisor)
    let res= helper(dividend,divisor,0)
-   console.log('count', res)
+   if(res<2**31*-1){return 2**31*-1 }
+   if(res>2**31-1){return 2**31-1}
    return finalSign*res
-
+   
 };
 function helper(dividend,divisor,count){
      if(dividend-divisor<0){
-        console.log('dividend<0', dividend,divisor,count)
-        console.log('count',count)
+        //console.log('dividend<0', dividend,divisor,count)
         return count
         //return count
      }
      else{
         dividend=dividend-divisor
         count+=1
-        console.log('dividend', dividend,count)
-         helper(dividend,divisor,count)
+       // console.log('dividend', dividend,count)
+         return helper(dividend,divisor,count)
      }
 
 }
 
 
-let dividend = 7
-let divisor = -3
+let dividend = 2147483647
+let divisor = 2
 console.log('divide', divide(dividend,divisor))
+
 console.log('helper', helper(7,3,0))
 
 var searchInsert = function(nums, target) {
@@ -1479,7 +1480,7 @@ Given an array of integers nums sorted in ascending order, find the starting and
 Your algorithm's runtime complexity must be in the order of O(log n).
 
 If the target is not found in the array, return [-1, -1].
- */
+ 
 
  var searchRange = function(nums, target) {
 
@@ -1520,3 +1521,190 @@ let target = 7
 
 
 console.log('searchRange', searchRange(nums0,target))
+*/
+/**
+ * 46. Permutations
+
+Given a collection of distinct integers, return all possible permutations.
+
+Example:
+
+Input: [1,2,3]
+Output:
+[
+  [1,2,3],
+  [1,3,2],
+  [2,1,3],
+  [2,3,1],
+  [3,1,2],
+  [3,2,1]
+]
+Accepted
+
+
+ function Permutations(nums){
+     let res=[]
+     helper(nums,[],res)
+     return res
+ }
+
+ function helper(nums,path,res){
+    
+     if(path.length===nums.length){
+         res.push(path)
+         console.log('res', res)
+         return 
+     }
+     for(let i=0;i<nums.length;i++){
+         if(path.includes(nums[i])){continue}
+       
+         helper(nums,path.concat(nums[i]),res)
+     
+     }
+ }
+
+ let nums=[1,2,3]
+
+ console.log('Permutations', Permutations(nums))
+ */
+/** 
+47. Permutations II
+Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+
+Example:
+
+Input: [1,1,2]
+Output:
+[
+  [1,1,2],
+  [1,2,1],
+  [2,1,1]
+]
+*/
+//change nums,minus nums[i]
+//while nums[i]==nums[i+1] continue
+function Permutations2(nums){
+    let res=[]
+    nums.sort((a,b)=>a-b)
+    //helper(nums,res,[])
+    helper(nums,res,[])
+    return res
+}
+function helper(nums,res,path){
+    if(nums.length===0){
+        // console.log("res", path,res)
+        //因为加进去res里了还是那个path,所以每次有什么变化 他就跟着变,,当最后一层nums变成0 时 path 又是从[ ] 开始,因为里面东西都pop出去了
+        res.push(path.slice())
+        //res.push(path)??????????
+        // console.log("res", path,res)
+        return
+    }
+    for(let i=0;i<nums.length;i++){
+        
+        // console.log('i', i,nums[i])
+        // console.log('nums', nums)
+        
+        
+        if(nums[i]===nums[i-1]){continue}
+        
+        path.push(nums[i])
+        nums.splice(i,1)
+        helper(nums,res, path)
+        nums.splice(i,0,path.pop())
+        
+    }
+}
+let nums=[1,2,3]
+
+console.log('Permutations', Permutations2(nums))
+let bb=[4]
+bb.push(nums)
+
+/** 
+60. Permutation Sequence
+
+Share
+The set [1,2,3,...,n] contains a total of n! unique permutations.
+
+By listing and labeling all of the permutations in order, we get the following sequence for n = 3:
+
+"123"
+"132"
+"213"
+"231"
+"312"
+"321"
+Given n and k, return the kth permutation sequence.
+
+Note:
+
+Given n will be between 1 and 9 inclusive.
+Given k will be between 1 and n! inclusive.
+Example 1:
+
+Input: n = 3, k = 3
+Output: "213"
+Example 2:
+
+*/
+function Permutation3(n,k){
+    let nums=[]
+    let res=[]
+    for(let i=1;i<n+1;i++){
+        nums.push(i)
+    }
+    console.log('nums', nums)
+    let path=''
+    backtracking(n,nums,path,res)
+    return res[k]
+}
+function backtracking(n,nums,path,res){
+    if(path.length===n){
+        res.push(path)
+        return 
+    }
+    for(let i=0;i<nums.length;i++){
+      
+        if(path.includes(nums[i])){continue}
+        backtracking(n,nums,path+nums[i],res)
+        
+    }
+}
+console.log('Permutations', Permutation3(3,3))
+/**
+ * 49. Group Anagrams
+Given an array of strings, group anagrams together.
+
+Example:
+
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+Output:
+[
+  ["ate","eat","tea"],
+  ["nat","tan"],
+  ["bat"]
+]
+ */
+
+ function groupAnagrams(strs){
+    let map=new Map()
+    for(let i=0;i<strs.length;i++){
+        str=strs[i].split('').sort().join('')
+        console.log('str[i', str)
+        if(map.has(str)){
+            map.get(str).push(strs[i])
+        }
+        else{
+            map.set(str,[strs[i]])
+  
+        }
+    }
+    console.log('map', map)
+    let res=[]
+ for (let value of map.values()){
+     res.push(value)
+ }
+return res
+ }
+ let strs=["eat", "tea", "tan", "ate", "nat", "bat"]
+ console.log('groupAnagrams', groupAnagrams(strs))
