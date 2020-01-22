@@ -1268,7 +1268,7 @@ Example 2:
 
 Input: dividend = 7, divisor = -3
 Output: -2
- */
+
 var divide = function(dividend, divisor) {
     if (dividend <= -2147483648 && divisor==-1) return 2147483647;
     if(divisor==-1){return -dividend}
@@ -1303,3 +1303,179 @@ function helper(dividend,divisor,count){
 let dividend = 2147483647
 let divisor = 2
 console.log('divide', divide(dividend,divisor))
+
+ */
+
+ /**
+  31. Next Permutation
+
+Share
+Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+
+If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
+
+The replacement must be in-place and use only constant extra memory.
+
+Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
+
+1,2,3,5,4 → 1,2,4,3,5
+3,2,1 → 1,2,3
+1,1,5 → 1,5,1
+
+ var nextPermutation = function(nums) {
+
+    for(let i=nums.length-1;i>0;i--){
+        if(nums[i-1]<nums[i]){
+            let changeIndex=i-1
+            let nextMaxNumIndex=findNextMax(nums,changeIndex)
+            swapNum(changeIndex,nextMaxNumIndex,nums)
+            sortRestNum(i,nums.length-1,nums)
+            return nums
+        }
+    }
+    sortRestNum(0,nums.length-1,nums)
+    return nums
+
+};
+function findNextMax(nums,numIndex){
+    curNum=nums[numIndex]
+    for(let i=nums.length-1;i>numIndex;i--){
+        if(nums[i]>curNum){
+            return i
+        }
+    }
+
+}
+let nums=[1,2,3,5,4,2]
+console.log(findNextMax(nums,2))
+function swapNum(i,j,nums){
+    let temp=nums[i]
+    nums[i]=nums[j]
+    nums[j]=temp
+    return nums
+}
+//console.log(swapNum(2,4,nums))
+function sortRestNum(start,end,nums){
+    while(start<end){
+        temp=nums[start]
+        nums[start]=nums[end]
+        nums[end]=temp
+        start++
+        end--
+
+    }
+    return nums
+
+}
+//console.log(sortRestNum(3,5,nums))
+
+console.log(nextPermutation(nums))
+  */
+/** 
+ 39. Combination Sum
+Given a set of candidate numbers (candidates) (without duplicates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.
+The same repeated number may be chosen from candidates unlimited number of times.
+
+All numbers (including target) will be positive integers.
+The solution set must not contain duplicate combinations.
+Example 1:
+
+Input: candidates = [2,3,6,7], target = 7,
+A solution set is:
+[
+  [7],
+  [2,2,3]
+]
+Example 2:
+
+Input: candidates = [2,3,5], target = 8,
+A solution set is:
+[
+  [2,2,2,2],
+  [2,3,3],
+  [3,5]
+]
+
+var combinationSum = function(nums, target) {
+    let res=[]
+    let path=[]
+    
+    helper(nums,path,0,target,res)
+    return res
+};
+
+function helper(nums,path,index,target,res){
+
+    for(let i=index;i<nums.length;i++){
+        if(target<0){return }
+        if(target===0){
+           res.push(path)
+          // console.log("ress",res)
+           return
+        }
+        // path.push(nums[i])
+        // console.log(path)
+        helper(nums, path.concat(nums[i]),i,target-nums[i],res)
+        
+        console.log('path',path)
+    }
+
+}
+ let candidates = [2,3,6,7]
+ 
+ 
+ let target = 7
+ console.log(combinationSum(candidates,target))
+ */
+/** 
+ 40. Combination Sum II
+
+Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.
+
+Each number in candidates may only be used once in the combination.
+
+Note:
+
+All numbers (including target) will be positive integers.
+The solution set must not contain duplicate combinations.
+Example 1:
+
+Input: candidates = [10,1,2,7,6,1,5], target = 8,
+A solution set is:
+[
+  [1, 7],
+  [1, 2, 5],
+  [2, 6],
+  [1, 1, 6]
+]
+*/
+var combinationSum2 = function(nums, target) {
+    let res=[]
+    nums.sort((a,b)=>a-b)
+    console.log(nums)
+    helper(nums,0,target,[],res)
+    return res
+};
+
+function helper(nums,index,target,path,res){
+    console.log("path", res,path)
+    if(target<0){return}
+    if(target===0){
+        res.push(path)
+        return
+    }
+    for(let i=index;i<nums.length;i++){
+       
+        helper(nums,i+1,target-nums[i],path.concat(nums[i]),res)
+        while (nums[i]==nums[i+1] && i<nums.length){
+            i++
+        }
+    }
+
+
+} 
+let candidates = [2,5,2,1,2]
+ 
+ 
+ let target = 5
+ console.log(combinationSum2(candidates,target))
