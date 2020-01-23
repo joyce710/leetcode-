@@ -970,7 +970,7 @@ Note:
 
 Given n will always be valid.
 
-*/
+
 function ListNode(val){
     this.val=val;
     this.next=null
@@ -986,6 +986,7 @@ function RemoveNode(head,n){
    }
 
 }
+*/
 
 
 
@@ -1269,6 +1270,7 @@ Example 2:
 Input: dividend = 7, divisor = -3
 Output: -2
 
+ 
 var divide = function(dividend, divisor) {
     if (dividend <= -2147483648 && divisor==-1) return 2147483647;
     if(divisor==-1){return -dividend}
@@ -1448,7 +1450,7 @@ A solution set is:
   [2, 6],
   [1, 1, 6]
 ]
-*/
+
 var combinationSum2 = function(nums, target) {
     let res=[]
     nums.sort((a,b)=>a-b)
@@ -1479,3 +1481,536 @@ let candidates = [2,5,2,1,2]
  
  let target = 5
  console.log(combinationSum2(candidates,target))
+console.log('helper', helper(7,3,0))
+
+var searchInsert = function(nums, target) {
+  for(let i=0;i<nums.length;i++){
+      if(nums[i]>=target){
+          return i
+
+      }
+  }
+  return nums.length
+    
+};
+
+*/
+/** 
+33. Search in Rotated Sorted Array
+Medium
+
+3532
+
+390
+
+Add to List
+
+Share
+Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+
+(i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).
+
+You are given a target value to search. If found in the array return its index, otherwise return -1.
+
+You may assume no duplicate exists in the array.
+
+Your algorithm's runtime complexity must be in the order of O(log n).
+*/
+/**这样写nums会被改变,但不能变,因为要返回原始index binarysearch 可以,但动的只能是指针,不能是nums这个
+ * 所以这个改一改的话就把search这个妇女单独拿出来写
+ */
+/*
+var search = function(begin,end,nums, target) {
+  
+
+    if(begin>end){return -1}
+    mid=Math.floor((begin+end)/2)
+    if(target===nums[mid]){return mid}
+    if(nums[begin]<nums[mid]){
+        //left is ascending
+       if(target <nums[begin]){
+           console.log('left is ascending', 'target in left',mid,end,nums[mid])
+           //target in right
+           //do bs in left
+           return search(mid,end,nums,target)
+         
+       }
+       else{
+           //do bs at right
+           console.log('left is ascending', 'target in right')
+           
+           return binarySearch(begin,mid,target,nums)
+       }
+    }
+    else{
+        //right is acending,let is mix
+        if(target<nums[mid]){
+            //target at left
+            //fdo search
+            console.log('right is ascending', 'target in left')
+            return search(begin,mid,nums,target)
+
+        }
+        else{
+            console.log('right is ascending', 'target in right',mid,end,nums[mid])
+            //target at right
+            //do bsf
+            return binarySearch(mid,end,target,nums)
+        }
+    }
+};
+function binarySearch(begin,end,target,nums){
+    console.log('bss', begin,end,target,nums)
+    if(begin> end ){return -1}
+    let mid=Math.floor((begin+end)/2)
+    console.log('num[mid', mid,nums[end],nums,nums.length)//????
+    console.log('mid66', mid,nums[mid],target)
+   if(target===nums[mid]){return mid}
+    if(target<nums[mid]){
+       return  binarySearch(begin,mid,target,nums)
+    }
+    else{
+       return  binarySearch(mid+1,end,target,nums)
+    }
+
+}
+
+let nums=[3,4,5,6,7,0,1,2]
+let target=7
+console.log('search', search (0,nums.length-1,nums, target))
+
+
+function SearchRotated(nums,target){
+     
+          let left=0;
+          let  r=nums.length-1
+         
+          while(left<=r){
+          let mid=Math.floor((left+r)/2)
+          if(nums[mid]===target){return mid}
+          if(nums[left]<=nums[mid]){
+              //left is ascending
+              if(nums[left]<=target &&target<=nums[mid]){
+                  //target  in left
+                  r=mid-1
+              }
+              else{
+                l=mid+1
+              }
+              
+          }
+          else{
+              //right is ascending
+              if(nums[mid]<=target &&target <=nums[r]){
+                  left=mid+1
+              }
+              else{
+                  r=mid-1
+              }
+          }
+          }
+          return -1
+
+}
+console.log('SearchRotated', SearchRotated (nums,target))
+
+*/
+/** 
+function IsFutureDate(dateVal) {
+    var Currentdate = new Date();
+        dateVal= dateVal.split("/");
+        console.log('dateval', dateVal)
+    var year = Currentdate.getFullYear();
+    let  curMonth = Currentdate.getMonth();
+    console.log('curMonth', curMonth)
+    if (year < dateVal[1]) {
+        return false;//future date
+
+    }        
+    else {
+        return true; //past date
+    }
+
+}
+console.log('teste', IsFutureDate("09/2013"))
+
+console.log(parseInt('5')< 4)
+
+const moonLanding = new Date('July 20, 69 00:20:18');
+
+console.log(moonLanding.getMonth()); // (January gives 0)
+
+*/
+
+
+/**
+ * 34. Find First and Last Position of Element in Sorted Array
+
+Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value.
+
+Your algorithm's runtime complexity must be in the order of O(log n).
+
+If the target is not found in the array, return [-1, -1].
+ 
+
+ var searchRange = function(nums, target) {
+
+    let start=0;
+    let end=nums.length-1
+   
+   
+   while(start<=end){
+    mid=Math.floor((start+end)/2)
+       console.log('startend', start,mid,end,nums[mid],target)
+        if(target===nums[mid]){
+           let start=mid
+           while(nums[start]===nums[mid]){
+               console.log('start', start)
+               start--
+           }
+           let end=mid+1
+           while(nums[end]===nums[mid]){
+               end++
+           }
+           return [start+1,end-1]
+        }
+        if(target<nums[mid]){
+          
+            end=mid-1
+        }
+        else{
+            console.log('left', '')
+            start=mid+1
+        }
+
+   }
+    return [-1,-1]
+};
+
+let nums0=[5,7,7,8,8,10]
+let target = 7
+
+
+console.log('searchRange', searchRange(nums0,target))
+*/
+/**
+ * 46. Permutations
+
+Given a collection of distinct integers, return all possible permutations.
+
+Example:
+
+Input: [1,2,3]
+Output:
+[
+  [1,2,3],
+  [1,3,2],
+  [2,1,3],
+  [2,3,1],
+  [3,1,2],
+  [3,2,1]
+]
+Accepted
+
+
+ function Permutations(nums){
+     let res=[]
+     helper(nums,[],res)
+     return res
+ }
+
+ function helper(nums,path,res){
+    
+     if(path.length===nums.length){
+         res.push(path)
+         console.log('res', res)
+         return 
+     }
+     for(let i=0;i<nums.length;i++){
+         if(path.includes(nums[i])){continue}
+       
+         helper(nums,path.concat(nums[i]),res)
+     
+     }
+ }
+
+ let nums=[1,2,3]
+
+ console.log('Permutations', Permutations(nums))
+ */
+/** 
+47. Permutations II
+Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+
+Example:
+
+Input: [1,1,2]
+Output:
+[
+  [1,1,2],
+  [1,2,1],
+  [2,1,1]
+]
+
+//change nums,minus nums[i]
+//while nums[i]==nums[i+1] continue
+function Permutations2(nums){
+    let res=[]
+    nums.sort((a,b)=>a-b)
+    //helper(nums,res,[])
+    helper(nums,res,[])
+    return res
+}
+function helper(nums,res,path){
+    if(nums.length===0){
+        // console.log("res", path,res)
+        //因为加进去res里了还是那个path,所以每次有什么变化 他就跟着变,,当最后一层nums变成0 时 path 又是从[ ] 开始,因为里面东西都pop出去了
+        res.push(path.slice())
+        //res.push(path)??????????
+        // console.log("res", path,res)
+        return
+    }
+    for(let i=0;i<nums.length;i++){
+        
+        // console.log('i', i,nums[i])
+        // console.log('nums', nums)
+        
+        
+        if(nums[i]===nums[i-1]){continue}
+        
+        path.push(nums[i])
+        nums.splice(i,1)
+        helper(nums,res, path)
+        nums.splice(i,0,path.pop())
+        
+    }
+}
+let nums=[1,2,3]
+
+console.log('Permutations', Permutations2(nums))
+let bb=[4]
+bb.push(nums)
+*/
+/** 
+60. Permutation Sequence
+
+Share
+The set [1,2,3,...,n] contains a total of n! unique permutations.
+
+By listing and labeling all of the permutations in order, we get the following sequence for n = 3:
+
+"123"
+"132"
+"213"
+"231"
+"312"
+"321"
+Given n and k, return the kth permutation sequence.
+
+Note:
+
+Given n will be between 1 and 9 inclusive.
+Given k will be between 1 and n! inclusive.
+Example 1:
+
+Input: n = 3, k = 3
+Output: "213"
+Example 2:
+
+function Permutation3(n,k){
+    let nums=[]
+    let res=[]
+    for(let i=1;i<n+1;i++){
+        nums.push(i)
+    }
+    console.log('nums', nums)
+    let path=''
+    backtracking(n,nums,path,res)
+    return res[k]
+}
+function backtracking(n,nums,path,res){
+    if(path.length===n){
+        res.push(path)
+        return 
+    }
+    for(let i=0;i<nums.length;i++){
+      
+        if(path.includes(nums[i])){continue}
+        backtracking(n,nums,path+nums[i],res)
+        
+    }
+}
+console.log('Permutations', Permutation3(3,3))
+
+
+
+*/
+/**
+ * 49. Group Anagrams
+Given an array of strings, group anagrams together.
+
+Example:
+
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+Output:
+[
+  ["ate","eat","tea"],
+  ["nat","tan"],
+  ["bat"]
+]
+
+ function groupAnagrams(strs){
+    let map=new Map()
+    for(let i=0;i<strs.length;i++){
+        str=strs[i].split('').sort().join('')
+        console.log('str[i', str)
+        if(map.has(str)){
+            map.get(str).push(strs[i])
+        }
+        else{
+            map.set(str,[strs[i]])
+  
+        }
+    }
+    console.log('map', map)
+    let res=[]
+ for (let value of map.values()){
+     res.push(value)
+ }
+return res
+ }
+ let strs=["eat", "tea", "tan", "ate", "nat", "bat"]
+ console.log('groupAnagrams', groupAnagrams(strs))
+ */
+/**
+ * 贪心算法！！
+55. Jump Game
+Given an array of non-negative integers, you are initially positioned at the first index of the array.
+
+Each element in the array represents your maximum jump length at that position.
+
+Determine if you are able to reach the last index.
+
+Example 1:
+
+Input: [2,3,1,1,4]
+Output: true
+Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
+ */
+var jumpGame= function(nums){
+    if(nums.length<2){return true}
+    let reachIndex=0
+    for(let i=0;i<nums.length && i<=reachIndex ;i++){
+        reachIndex=Math.max(nums[i]+i,reachIndex)
+    }
+    if(reachIndex<nums.length-1){return false}
+    return true
+}
+let nums3=[2,0,0]
+console.log("jumpGame",jumpGame(nums3))
+/** 
+56. Merge Intervals
+Given a collection of intervals, merge all overlapping intervals.
+
+Example 1:
+
+Input: [[1,3],[2,6],[8,10],[15,18]]
+Output: [[1,6],[8,10],[15,18]]
+Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
+Example 2:
+
+Input: [[1,4],[4,5]]
+Output: [[1,5]]
+Explanation: Intervals [1,4] and [4,5] are considered overlapping.
+
+function merges(nums){
+    nums.sort((a,b)=>a[0]-b[0])
+    console.log(nums)
+    let res=[]
+    for(let i=1;i<nums.length;i++){
+        let pre=nums[i-1]
+        let cur=nums[i]
+        if(pre[1]>=cur[0]){
+            cur[1]=Math.max(pre[1],cur[1]);
+            nums[i]=[pre[0],cur[1]]
+            console.log(nums[i])
+
+        }
+        else {
+            res.push(nums[i-1])
+
+        }
+    }
+    res.push(nums[nums.length - 1])
+    console.log(1)
+    return res
+}
+let Input=[[1,4],[2,3],[8,17],[15,18]]
+console.log("mergeinterval", merges(Input))
+
+*/
+
+/**62. Unique Paths
+
+A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+
+How many possible unique paths are there?
+Above is a 7 x 3 grid. How many possible unique paths are there?
+
+Note: m and n will be at most 100.
+
+Example 1:
+Input: m = 3, n = 2
+Output: 3
+Explanation:
+From the top-left corner, there are a total of 3 ways to reach the bottom-right corner:
+1. Right -> Right -> Down
+2. Right -> Down -> Right
+3. Down -> Right -> Right
+Example 2:
+
+Input: m = 7, n = 3
+Output: 28 */
+var uniquePaths = function(m, n) {
+  let array=new Array(m+1)
+   for(let i=0;i<array.length;i++){
+       array[i]=new Array(n+1)
+   }
+   array[0][0]=1
+
+
+   //从下往上计算上来的，2的n次方，设置m+1和n+1就是为了多计算一位，这样就有包含m n 了
+  for(let i=1;i<=m;i++){
+      for(let j=1;j<=n;j++){
+          if(i==0&& j==0){continue}
+         array[i][j]=array[i-1][j]+array[i][j-1]
+         console.log(array[i][j])
+      }
+  }
+  return array[m][n]
+}
+
+console.log("uniquePaths",uniquePaths(3,2))
+
+//递归
+var uniquePaths2 = function(m, n) {
+    if(m<0|| n<0){return 0}
+    if(m==0&& n==0){return 1}
+    let array=new Array(m)
+    for(let i=0;i<array.length;i++){
+        array[i]=new Array(n)
+    }
+    if(m>0 &&n>0 ){
+         let right_path=uniquePaths2(m-1,n)
+  
+        let down_path=uniquePaths2(m,n-1)
+         array[m][n]= right_path+down_path
+    }
+    
+    return array[m][n]
+
+}
+
+console.log("uniquePaths2",uniquePaths(3,2))
