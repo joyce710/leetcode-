@@ -1896,7 +1896,7 @@ Example 1:
 Input: [2,3,1,1,4]
 Output: true
 Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
- */
+
 var jumpGame= function(nums){
     if(nums.length<2){return true}
     let reachIndex=0
@@ -1908,6 +1908,7 @@ var jumpGame= function(nums){
 }
 let nums3=[2,0,0]
 console.log("jumpGame",jumpGame(nums3))
+ */
 /** 
 56. Merge Intervals
 Given a collection of intervals, merge all overlapping intervals.
@@ -1973,25 +1974,33 @@ Example 2:
 
 Input: m = 7, n = 3
 Output: 28 */
-var uniquePaths = function(m, n) {
-  let array=new Array(m+1)
-   for(let i=0;i<array.length;i++){
-       array[i]=new Array(n+1)
-   }
-   array[0][0]=1
 
+function uniquePaths(m,n){
+    let arr=new Array(m)
+    for(let i=0;i<m;i++){
+        arr[i]=new Array(n)
+    }
+    console.log('arr', arr)
+    arr[0][0]=1
+    for(let i=0;i<n;i++){
+        for(let j=0;j<n;j++){
 
-   //从下往上计算上来的，2的n次方，设置m+1和n+1就是为了多计算一位，这样就有包含m n 了
-  for(let i=1;i<=m;i++){
-      for(let j=1;j<=n;j++){
-          if(i==0&& j==0){continue}
-         array[i][j]=array[i-1][j]+array[i][j-1]
-         console.log(array[i][j])
-      }
-  }
-  return array[m][n]
+            //如果最顶上i-1=0了说明就没有从上面治过来的,所以没有above
+            //同理对于right\,如果靠边了j-1=0了 说明就没有right的路径
+            if(i===0&& j===0){continue}
+            let above=0;
+            let right=0
+            if(i-1>0){ above=arr[i-1][j]}
+            if(j-1>0){ right=arr[i][j-1]}
+            //因为到上一个点有多少种方式, 此点就上上面两条方式相加,如果到此点只有一条路,就是结果和上一条一样
+            arr[i][j]=above+right
+            console.log('arrii ', i,j,arr[i][j])
+
+        }
+        return arr[m-1][n-1]
+    }
+
 }
-
 console.log("uniquePaths",uniquePaths(3,2))
 
 //递归
