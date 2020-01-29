@@ -1973,7 +1973,7 @@ From the top-left corner, there are a total of 3 ways to reach the bottom-right 
 Example 2:
 
 Input: m = 7, n = 3
-Output: 28 */
+Output: 28 
 
 function uniquePaths(m,n){
     let arr=new Array(m)
@@ -2002,24 +2002,75 @@ function uniquePaths(m,n){
 
 }
 console.log("uniquePaths",uniquePaths(3,2))
+*/
+/**
+66. Plus One
+Given a non-empty array of digits representing a non-negative integer, plus one to the integer.
 
-//递归
-var uniquePaths2 = function(m, n) {
-    if(m<0|| n<0){return 0}
-    if(m==0&& n==0){return 1}
-    let array=new Array(m)
-    for(let i=0;i<array.length;i++){
-        array[i]=new Array(n)
-    }
-    if(m>0 &&n>0 ){
-         let right_path=uniquePaths2(m-1,n)
-  
-        let down_path=uniquePaths2(m,n-1)
-         array[m][n]= right_path+down_path
+The digits are stored such that the most significant digit is at the head of the list, and each element in the array contain a single digit.
+
+You may assume the integer does not contain any leading zero, except the number 0 itself.
+
+Example 1:
+
+Input: [1,2,3]
+Output: [1,2,4]
+Explanation: The array represents the integer 123.
+Example 2:
+
+Input: [4,3,2,1]
+Output: [4,3,2,2]
+Explanation: The array represents the integer 4321. 
+
+
+var plusOne = function(digits) {
+    for(let i=digits.length-1;i>=0;i--){
+      if(digits[i]<9){
+          digits[i]++
+          return digits
+      }
+      digits[i]=0
+      console.log('digit ', digits )
     }
     
-    return array[m][n]
+digits.unshift(1)
+    return digits
 
+};
+let nums=[9]
+console.log('plusOne', plusOne(nums))
+*/
+/** 
+67. Add Binary
+Given two binary strings, return their sum (also a binary string).
+
+The input strings are both non-empty and contains only characters 1 or 0.
+
+Example 1:
+
+Input: a = "11", b = "1"
+Output: "100"
+Example 2:
+
+Input: a = "1010", b = "1011"
+Output: "10101"*/
+function binary(a,b){
+    let lena=a.length
+    let lenb=b.length
+  let len=Math.max(a.length,b.length)
+   helper(len-1,a,b,0,res)
+   function helper(i,a,b,sum,res){
+       if(a[i]==undefined ){
+          b.slice(0,i)
+          res=b+res
+          return res
+
+       }
+        else if(a[i]+b[j]+sum>=2){
+          b[j]=(a[i]+b[j]+sum)%2
+          sum=1
+          return helper(i-1,a,b,sum,res)
+        }
+       helper(i-1,a,b,a[i]+a[b]+sum,res)
+    }
 }
-
-console.log("uniquePaths2",uniquePaths(3,2))
