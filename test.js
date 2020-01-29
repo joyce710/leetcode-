@@ -1950,6 +1950,333 @@ let Input=[[1,4],[2,3],[8,17],[15,18]]
 console.log("mergeinterval", merges(Input))
 
 */
+/**
+55. Jump Game
+Given an array of non-negative integers, you are initially positioned at the first index of the array.
+
+Each element in the array represents your maximum jump length at that position.
+
+Determine if you are able to reach the last index.
+
+Example 1:
+
+Input: [2,3,1,1,4]
+Output: true
+Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
+
+var jumpGame= function(nums){
+    if(nums.length<2){return true}
+    let reachIndex=0
+    for(let i=0;i<nums.length && i<=reachIndex ;i++){
+        reachIndex=Math.max(nums[i]+i,reachIndex)
+    }
+    if(reachIndex<nums.length-1){return false}
+    return true
+}
+let nums3=[2,0,0]
+console.log("jumpGame",jumpGame(nums3))
+ */
+/** 
+56. Merge Intervals
+Given a collection of intervals, merge all overlapping intervals.
+
+Example 1:
+
+Input: [[1,3],[2,6],[8,10],[15,18]]
+Output: [[1,6],[8,10],[15,18]]
+Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
+Example 2:
+
+Input: [[1,4],[4,5]]
+Output: [[1,5]]
+Explanation: Intervals [1,4] and [4,5] are considered overlapping.
+
+function merges(nums){
+    nums.sort((a,b)=>a[0]-b[0])
+    console.log(nums)
+    let res=[]
+    for(let i=1;i<nums.length;i++){
+        let pre=nums[i-1]
+        let cur=nums[i]
+        if(pre[1]>=cur[0]){
+            cur[1]=Math.max(pre[1],cur[1]);
+            nums[i]=[pre[0],cur[1]]
+            console.log(nums[i])
+
+        }
+        else {
+            res.push(nums[i-1])
+
+        }
+    }
+    res.push(nums[nums.length - 1])
+    console.log(1)
+    return res
+}
+let Input=[[1,4],[2,3],[8,17],[15,18]]
+console.log("mergeinterval", merges(Input))
+
+*/
+
+/**62. Unique Paths
+
+A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+
+How many possible unique paths are there?
+Above is a 7 x 3 grid. How many possible unique paths are there?
+
+Note: m and n will be at most 100.
+
+Example 1:
+Input: m = 3, n = 2
+Output: 3
+Explanation:
+From the top-left corner, there are a total of 3 ways to reach the bottom-right corner:
+1. Right -> Right -> Down
+2. Right -> Down -> Right
+3. Down -> Right -> Right
+Example 2:
+
+Input: m = 7, n = 3
+Output: 28 
+//到某一个位置有多少走法
+
+function uniquePaths(m,n){
+    let arr=new Array(m)
+    for(let i=0;i<arr.length;i++){
+        arr[i]=new Array(n)
+    }
+    console.log('arr', arr)
+    arr[0][0]=1
+    for(let i=0;i<m;i++){
+        for(let j=0;j<n;j++){
+
+            //如果最顶上i-1=0了说明就是从最上面那个点，但如果i-1<0了，就没有above了过来的,所以没有above
+            //同理对于right\,如果靠边了j-1=0了 说明就没有right的路径
+            if(i===0&& j===0){continue}
+             above=0;
+            right=0
+            if(i>0){ above=arr[i-1][j]}
+            if(j>0){ right=arr[i][j-1]}
+            //因为到上一个点有多少种方式, 此点就上上面两条方式相加,如果到此点只有一条路,就是结果和上一条一样
+            arr[i][j]=above+right
+            console.log('arrii ', i,j,arr[i][j])
+
+        }
+    }
+    return arr[m-1][n-1]
+}
+console.log("uniquePaths",uniquePaths(3,2))
+//better
+var uniquePaths11 = function(m, n) {
+    let arr=new Array(m)
+    for(let i=0;i<m;i++){
+        arr[i]=new Array(2)
+    }
+
+    for(let i=0;i<m;i++){
+        for(let j=0;j<n;j++){
+            if(i==0|| j==0){
+                arr[i][j]=1
+            }
+            else{
+                arr[i][j]=arr[i-1][j]+arr[i][j-1]
+            }
+        }
+    }
+    return arr[m-1][n-1]
+}
+console.log("uniquePaths11",uniquePaths11(3,2))
+//递归
+var uniquePaths2 = function(m, n) {
+    let array=new Array(m)
+    for(let i=0;i<array.length;i++){
+        array[i]=new Array(n)
+    }
+    return helper(m-1,n-1,array)
+    }
+    function helper(i,j){
+        if(i==0||j==0){return 1}
+        else if(array[i][j]>0){return array[i][j]}
+        array[i][j]= helper(i-1,j,array)+helper(i,j-1,array)
+        return array[i][j]
+    }
+
+console.log("uniquePaths2",uniquePaths(3,2))
+
+*/
+
+/**
+ * 63. Unique Paths II
+A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+
+Now consider if some obstacles are added to the grids. How many unique paths would there be?
+An obstacle and empty space is marked as 1 and 0 respectively in the grid.
+
+Note: m and n will be at most 100.
+
+Example 1:
+
+Input:
+[
+  [0,0,0],
+  [0,1,0],
+  [0,0,0]
+]
+Output: 2
+Explanation:
+There is one obstacle in the middle of the 3x3 grid above.
+There are two ways to reach the bottom-right corner:
+1. Right -> Right -> Down -> Down
+2. Down -> Down -> Right -> Right
+
+function UniquePathsII(obstacleGrid){
+    let rowlen=obstacleGrid.length
+    let collen=obstacleGrid[0].length
+    for(let i=0;i<rowlen;i++){
+        for(let j=0;j<collen;j++){
+            //直接粉为是1的和不是1 的 不是1 的是一类再进行选择，不然会重叠
+            if(obstacleGrid[i][j]==1){obstacleGrid[i][j]=0}
+            else{
+               if(i==0&&j==0){
+                obstacleGrid[i][j]=1}
+               else if(i==0 && j>0){obstacleGrid[i][j]=obstacleGrid[i][j-1]}
+               else if(j==0 && i>0){obstacleGrid[i][j]=obstacleGrid[i-1][j]}
+               else{
+                obstacleGrid[i][j]=obstacleGrid[i-1][j]+obstacleGrid[i][j-1]
+            }
+        }
+          return obstacleGrid[rowlen-1][collen-1]
+        }
+
+ */
+/**
+66. Plus One
+Given a non-empty array of digits representing a non-negative integer, plus one to the integer.
+
+The digits are stored such that the most significant digit is at the head of the list, and each element in the array contain a single digit.
+
+You may assume the integer does not contain any leading zero, except the number 0 itself.
+
+Example 1:
+
+Input: [1,2,3]
+Output: [1,2,4]
+Explanation: The array represents the integer 123.
+Example 2:
+
+Input: [4,3,2,1]
+Output: [4,3,2,2]
+Explanation: The array represents the integer 4321. 
+
+
+var plusOne = function(digits) {
+    for(let i=digits.length-1;i>=0;i--){
+      if(digits[i]<9){
+          digits[i]++
+          return digits
+      }
+      digits[i]=0
+      console.log('digit ', digits )
+      digits.unshift(1)
+    return digits
+
+};
+let nums=[9]
+console.log('plusOne', plusOne(nums))
+*/
+    
+/**
+ * 64. Minimum Path Sum
+Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
+
+Note: You can only move either down or right at any point in time.
+
+Example:
+
+Input:
+[
+  [1,3,1],
+  [1,5,1],
+  [4,2,1]
+]
+Output: 7
+Explanation: Because the path 1→3→1→1→1 minimizes the sum.
+ 
+function minPathSum(grid){
+    rowlen=grid.length
+    collen=grid[0].length
+    for(let i=0;i<rowlen;i++){
+        for(let j=0; j<collen;j++){
+            if(i==0 && j==0){grid[i][j]=grid[i][j]}
+            else if(i==0 && j>0){
+                grid[i][j]+=grid[i][j-1]
+            }
+            else if(j==0 && i>0){
+                grid[i][j]+=grid[i-1][j]
+            }
+           
+           else {
+               grid[i][j]+=Math.min(grid[i][j-1],grid[i-1][j])
+            }
+            console.log(i,j,grid[i][j])
+        }    
+    }
+    return grid[rowlen-1][collen-1]
+}
+let grid=[
+    [1,3,1],
+    [1,5,1],
+    [4,2,1]
+  ]
+console.log("minPathSum",minPathSum(grid))
+*/
+
+/** 
+67. Add Binary
+Given two binary strings, return their sum (also a binary string).
+
+The input strings are both non-empty and contains only characters 1 or 0.
+
+Example 1:
+
+Input: a = "11", b = "1"
+Output: "100"
+Example 2:
+
+Input: a = "1010", b = "1011"
+Output: "10101"
+function binary(a,b){
+    let lena=a.length
+    let lenb=b.length
+  let len=Math.max(a.length,b.length)
+   helper(len-1,a,b,0,res)
+   function helper(i,a,b,sum,res){
+       if(a[i]==undefined ){
+          b.slice(0,i)
+          res=b+res
+          return res
+
+       }
+        else if(a[i]+b[j]+sum>=2){
+          b[j]=(a[i]+b[j]+sum)%2
+          sum=1
+          return helper(i-1,a,b,sum,res)
+        }
+       helper(i-1,a,b,a[i]+a[b]+sum,res)
+    }
+}
+
+*/
+
+
+
+
+
 
 /**62. Unique Paths
 
