@@ -16,7 +16,7 @@ Input: 8
 Output: 2
 Explanation: The square root of 8 is 2.82842..., and since 
              the decimal part is truncated, 2 is returned.
-*/
+
 var mySqrt = function(x) {
     let l=1
     let r=x
@@ -38,7 +38,7 @@ var mySqrt = function(x) {
 };
 
 console.log(mySqrt(1))
-
+*/
 /**
  *70. Climbing Stairs
 Input: 2
@@ -84,15 +84,59 @@ Follow up:
 A rather straight forward solution is a two-pass algorithm using counting sort.
 First, iterate the array counting number of 0's, 1's, and 2's, then overwrite array with total number of 0's, then 1's and followed by 2's.
 Could you come up with a one-pass algorithm using only constant space?
- 
+  */
  //two ways:
  //count sort and one-pass 
  //solution one:
- var sortColors = function(nums) {
-
+//  var sortColors = function(nums) {
+//      let map={}
+//    for(let i=0;i<nums.length;i++){
+//        if(map[nums[i]]){map[nums[i]]+=1}
+//        else{map[nums[i]]=1}
+       
+//        console.log(i,nums[i],map)
+//    }
+//    console.log(map[0])
+//    nums.nums.slice(0,map[0],0)
+//    console.log("nums",nums)
     
-};
- */
+// };
+// let nums=[2,0,2,1,1,0]
+//  console.log("sortColors",sortColors(nums))
+
+function sortColors2(nums){
+    //aftermin 之前都是最小的，beforemax之后都是最大的，理清这两个
+    let afterMin=0;
+    let beforeMax=nums.length-1
+    let i=0
+    while(i<=beforeMax){
+        if(nums[i]===2){
+            let t=nums[i]
+           nums[i]=nums[beforeMax]
+           nums[beforeMax]=t
+            
+            beforeMax--
+        }
+       else if(nums[i]===0){
+           let t=nums[i]
+           nums[i]=nums[afterMin]
+           nums[afterMin]=t
+           afterMin++
+           i++
+       }
+       else{
+           i++
+       }
+    }
+    return nums
+
+}
+let nums=[2,0,1]
+console.log("sortColors2",sortColors2(nums))
+
+
+
+
 /**
  * 77. Combinations
 Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
@@ -192,6 +236,55 @@ Output:
 
  console.log('Subsets', Subsets(nums))
   */
+/**
+ * 71. Simplify Path
+Given an absolute path for a file (Unix-style), simplify it. Or in other words, convert it to the canonical path.
+
+In a UNIX-style file system, a period . refers to the current directory. Furthermore, a double period .. moves the directory up a level. For more information, see: Absolute path vs relative path in Linux/Unix
+
+Note that the returned canonical path must always begin with a slash /, and there must be only a single slash / between two directory names. The last directory name (if it exists) must not end with a trailing /. Also, the canonical path must be the shortest string representing the absolute path.
+Example 1:
+
+Input: "/home/"
+Output: "/home"
+Explanation: Note that there is no trailing slash after the last directory name.
+Example 2:
+
+Input: "/../"
+Output: "/"
+Explanation: Going one level up from the root directory is a no-op, as the root level is the highest level you can go.
+Example 3:
+
+Input: "/home//foo/"
+Output: "/home/foo"
+Explanation: In the canonical path, multiple consecutive slashes are replaced by a single one.
+Example 4:
+
+Input: "/a/./b/../../c/"
+Output: "/c"
+ 
+function SimplifyPath(path){
+    path= path.split("/")
+    console.log(path)
+    let res=[]
+    for(let i=0;i<path.length;i++){
+       if(path[i]=="." || path[i]==''){continue}
+       else if(path[i]==".."){res.pop()}
+       else{res.push(path[i])}
+     
+    }
+    console.log(res)
+    res="/"+res.join("/").toString()
+    return res
+    }
+
+    let path ="/a/../../b/../c//.//"
+
+console.log("SimplifyPath",SimplifyPath(path)) 
+
+*/
+
+
  /**
   * 79. Word Search
 Given a 2D board and a word, find if the word exists in the grid.
@@ -206,8 +299,31 @@ board =
   ['S','F','C','S'],
   ['A','D','E','E']
 ]
-
 Given word = "ABCCED", return true.
 Given word = "SEE", return true.
 Given word = "ABCB", return false.
   */
+ var wordSearch=function(board,word){
+     let row=board.length;
+     let col=board[0].length;
+     for(let i=0;i<row;i++){
+         for(let j=0; j<col;j++){
+             if(helper(i,j,row,col,word,0,board)){return true}  
+         }
+     }
+     return false
+
+ }
+ function helper(i,j,row,col,word,d,board){
+    if(i<0 || j<0|| i>=row||j>=col||board[i][j]!=word[d]){return false}
+    else if(d==word.length-1){return true}
+    //处理重复的不能走，就把当前这个格子标记成一个特殊的数
+    let cur=board[i][j]
+    board[i][j]="*"
+    let res= helper(i+1,j,row,col,word,d+1,board)||helper(i-1,j,row,col,word,d+1,board)
+            ||helper(i,j-1,row,col,word,d+1,board)||helper(i,j+1,row,col,word,d+1,board)
+    board[i][j]=cur
+    return res
+    }
+    
+ 
