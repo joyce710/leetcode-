@@ -56,7 +56,7 @@ Explanation: There are three ways to climb to the top.
  */
 var climbStairs = function(n) {
  let arr=new Array(n)
- helper(n,arr)
+ return helper(n,arr)
 }
 function helper(n,arr) {
 
