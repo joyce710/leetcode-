@@ -1,3 +1,8 @@
+function NodeList(val){
+    this.val=val;
+    this.next=null
+}
+
 /** 69. Sqrt(x)
 
 Implement int sqrt(int x).
@@ -302,7 +307,7 @@ board =
 Given word = "ABCCED", return true.
 Given word = "SEE", return true.
 Given word = "ABCB", return false.
-  */
+
  var wordSearch=function(board,word){
      let row=board.length;
      let col=board[0].length;
@@ -325,5 +330,168 @@ Given word = "ABCB", return false.
     board[i][j]=cur
     return res
     }
+  */
+
+/** 
+    80. Remove Duplicates from Sorted Array II
+Given a sorted array nums, remove the duplicates in-place such that duplicates appeared at most twice and return the new length.
+
+Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+
+Example 1:
+
+Given nums = [1,1,1,2,2,3],
+
+Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3 respectively.
+
+It doesn't matter what you leave beyond the returned length.
+Example 2:
+
+Given nums = [0,0,1,1,1,1,2,3,3],
+
+Your function should return length = 7, with the first seven elements of nums being modified to 0, 0, 1, 1, 2, 3 and 3 respectively.
+
+It doesn't matter what values are set beyond th
+   
+
+function RemoveDuplicates(nums){
+    let i=0
+    while(nums[i]!=null){
+        if(nums[i]===nums[i+1]){
+            while(nums[i+1]===nums[i+1+1]){
+                nums.splice(i+1,1)
+                //console.log('i', i)
+            }
+            i+=2
+        }
+       else{
+           i++
+       }
     
- 
+    }
+    return nums
+
+}
+let nums2= [1,1,1,2,2,3]
+console.log('RemoveDuplicates', RemoveDuplicates(nums2))
+
+
+*/
+
+
+
+
+
+/**
+ * 83. Remove Duplicates from Sorted List
+Given a sorted linked list, delete all duplicates such that each element appear only once.
+
+Example 1:
+Input: 1->1->2
+Output: 1->2
+Example 2:
+
+Input: 1->1->2->3->3
+Output: 1->2->3
+
+function removeDuplicates(head){
+    let start=head
+     
+     
+    while(start){
+    if(start.next!==null &&start.val===start.next.val){
+        
+        start.next= start.next.next
+        //console.log('start', start)
+    }
+    else{
+        start=start.next
+    }
+   
+ }
+      return head
+  
+ }
+
+console.log('removeDuplicates', removeDuplicates()) 
+ */
+/**
+ * 82. Remove Duplicates from Sorted List II
+Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
+
+Example 1:
+
+Input: 1->2->3->3->4->4->5
+Output: 1->2->5
+Example 2:
+
+Input: 1->1->1->2->3
+Output: 2->3
+ */
+function removeDuplicatesII(){
+    let dummy=new ListNode()
+    dummy.next=head
+    let pre=dummy
+    let cur=head
+    while(pre){
+        if(cur.val==cur.next.val){
+            while(cur.val==cur.next.val&& cur.next){
+                cur=cur.next
+            }
+            pre.next=cur.next
+            cur=cur.next
+        }
+        else{
+            pre=cur
+            cur=cur.next
+        }
+}
+return dummy.next
+}
+
+/** 
+86. Partition List
+Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
+
+You should preserve the original relative order of the nodes in each of the two partitions.
+
+Example:
+
+Input: head = 1->4->3->2->5->2, x = 3
+Output: 1->2->2->4->3->5
+
+*/
+function partitionList(head,x){
+    let dummy=new ListNode()
+    dummy.next=head
+    let pre=head
+    let partition=head
+    let after
+    while(partition.next.val>=x){
+        partition=partition.next
+    }
+    
+    pre=partition
+    partition=partition.next
+    cur=partition.next
+    while (cur &&cur.next){
+        
+        if(cur.val<x){
+
+          
+           partition.next=cur.next
+           cur.next=partition
+           pre.next=cur
+           pre=pre.next
+           cur=cur.next
+        }
+        else{
+          cur=cur.next
+        }
+    }
+    return dummy.next
+
+}
+
+
+
