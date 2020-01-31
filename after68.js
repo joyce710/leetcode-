@@ -460,38 +460,75 @@ Example:
 Input: head = 1->4->3->2->5->2, x = 3
 Output: 1->2->2->4->3->5
 
-*/
-function partitionList(head,x){
+
+var partition = function(head, x) {
+    if(!head || x==0||!head.next){return head}
     let dummy=new ListNode()
     dummy.next=head
-    let pre=head
+    let pre=dummy
+    let cur
     let partition=head
     let after
-    while(partition.next.val>=x){
+    while(partition&&partition.val<x){
         partition=partition.next
+        pre=pre.next
     }
-    
-    pre=partition
-    partition=partition.next
+    console.log(partition)
+    if(partition.val ==null){
+   return head}
     cur=partition.next
-    while (cur &&cur.next){
+    //console.log("cur",cur,"pre",pre)
+    while (cur ){
         
         if(cur.val<x){
 
           
            partition.next=cur.next
-           cur.next=partition
+           cur.next=pre.next
            pre.next=cur
            pre=pre.next
-           cur=cur.next
+           cur=partition.next
         }
         else{
           cur=cur.next
+            partition=partition.next
         }
     }
     return dummy.next
 
 }
+*/
+/**
+ * 92. Reverse Linked List II
+Reverse a linked list from position m to n. Do it in one-pass.
+
+Note: 1 ≤ m ≤ n ≤ length of list.
+
+Example:
+
+Input: 1->2->3->4->5->NULL, m = 2, n = 4
+Output: 1->4->3->2->5->NULL
+ */
+function ReversLink(head,m,n){
+    let dummy=new ListNode()
+    dummy.next=head
+    let pre=dummy
+    let prelast=dummy
+    let last=head
+    let cur=head
+    while (m>1){
+        pre=pre.next
+        cur=cur.next
+        m--
+    }
+    while(n>1){
+        prelast=prelast.next
+        n--
+    }
+
+    for(let i=0;i<n-m+1;i++){
+        pre.next=cur
+    }
 
 
-
+}
