@@ -427,7 +427,7 @@ Example 2:
 
 Input: 1->1->1->2->3
 Output: 2->3
- */
+
 function removeDuplicatesII(){
     let dummy=new ListNode()
     dummy.next=head
@@ -448,7 +448,7 @@ function removeDuplicatesII(){
 }
 return dummy.next
 }
-
+*/
 /** 
 86. Partition List
 Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
@@ -460,44 +460,152 @@ Example:
 Input: head = 1->4->3->2->5->2, x = 3
 Output: 1->2->2->4->3->5
 
-
-var partition = function(head, x) {
-    if(!head || x==0||!head.next){return head}
-    let dummy=new ListNode()
-    dummy.next=head
-    let pre=dummy
-    let cur
-    let partition=head
-    let after
-    while(partition&&partition.val<x){
-        partition=partition.next
-        pre=pre.next
-    }
-    console.log(partition)
-    if(partition.val ==null){
-   return head}
-    cur=partition.next
-    //console.log("cur",cur,"pre",pre)
-    while (cur ){
+    var partition = function(head, x) {
+       
+        let node1=new ListNode()
+        let node2=new ListNode()
+    
+        let dimmynode1=node1
+        let dummynode2=node2
+        while(head){
+            if(head.val>=x){
+                node1.next=head
+                node1=node1.next
+            }
+            else{
+                node2.next=head
+                node2=node2.next
+            }
+            head=head.next
+    
+        }
+       //console.log("node1",node1,"node2",node2,)
+        node2.next=dimmynode1.next
+        node1.next=null
+        return dummynode2.next
         
-        if(cur.val<x){
+    
+    }
+*/
 
-          
-           partition.next=cur.next
-           cur.next=pre.next
-           pre.next=cur
-           pre=pre.next
-           cur=partition.next
+/** 
+88. Merge Sorted Array
+
+Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.
+
+Note:
+
+The number of elements initialized in nums1 and nums2 are m and n respectively.
+You may assume that nums1 has enough space (size that is greater or equal to m + n) to hold additional elements from nums2.
+Example:
+
+Input:
+nums1 = [1,2,3,0,0,0], m = 3
+nums2 = [2,5,6],       n = 3
+
+Output: [1,2,2,3,5,6]0
+function MergeArray(nums1,nums2,m,n){
+    nums1.splice(m,nums1.length)
+   nums2.splice(n,nums2.length)
+    console.log('nums1', nums1,nums2)
+    let i=0
+    let j=0
+   while(j<n){
+       console.log('nums[i', nums1[i],nums2[j])
+       if(nums1[i]>nums2[j] || nums1[i]==undefined){
+          nums1.splice(i,0,nums2[j])
+          i++
+          j++
+          console.log("nums1aa",nums1)
+       }
+       else{
+           i++
+       }
+   }
+   return nums1
+    
+}
+
+let nums1 = [1,2,3,0,0,0]
+let m = 3
+let nums2 = [2,5,6]
+let n = 3
+console.log('merge', MergeArray(nums1,nums2,m,n))
+
+function MergeArray2(nums1,nums2,m,n){
+    let i=m-1;
+    let j=n-1
+    len=m+n-1
+   
+        while(len>=0 && i>=0 && j>=0){
+            console.log('i,j', i,j,nums1[i],nums2[j],nums1)
+        if(nums1[i]<nums2[j]){
+            nums1[len]=nums2[j]
+            j--
+            len--
         }
         else{
-          cur=cur.next
-            partition=partition.next
+            nums1[len]=nums1[i]
+            i--
+            len--
+
         }
-    }
-    return dummy.next
+     }
+    
+    return nums1
 
 }
+let nums1 = [1,2,3,0,0,0]
+let m = 3
+let nums2 = [2,5,6]
+let n = 3
+console.log('merge', MergeArray2(nums1,nums2,m,n))
 */
+
+/**
+ 90. I Subsets II
+Given a collection of integers that might contain duplicates, nums, return all possible subsets (the power set).
+
+Note: The solution set must not contain duplicate subsets.
+
+Input: [1,2,2]
+Output:
+[
+  [2],
+  [1],
+  [1,2,2],
+  [2,2],
+  [1,2],
+  []
+] 
+ */
+function SubsetsII(nums){
+    let res=[]
+    helper(0,nums,[],res)
+    return res
+}
+  function helper(start,nums,path,res){
+     
+      for(let i=start;i<nums.length;i++){
+        console.log('i', i,path)
+        if(i>start &&nums[i]==nums[i-1]){
+            continue
+        }
+        res.push(path)
+        console.log('path', path)
+         helper(start+1,nums,[...path,nums[i]],res)
+        
+      }
+      
+
+  }
+
+
+
+let nums22=[1,2,2]
+console.log('SubsetsII', SubsetsII(nums22))
+
+
 /**
  * 92. Reverse Linked List II
 Reverse a linked list from position m to n. Do it in one-pass.
@@ -525,10 +633,7 @@ function ReversLink(head,m,n){
         prelast=prelast.next
         n--
     }
-
     for(let i=0;i<n-m+1;i++){
         pre.next=cur
     }
-
-
 }
