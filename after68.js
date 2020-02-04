@@ -580,21 +580,21 @@ Output:
 ] 
  */
 function SubsetsII(nums){
+    nums.sort()
     let res=[]
     helper(0,nums,[],res)
     return res
 }
   function helper(start,nums,path,res){
-     
+    res.push(path.slice(0))
       for(let i=start;i<nums.length;i++){
-        console.log('i', i,path)
+        console.log('i', i)
         if(i>start &&nums[i]==nums[i-1]){
             continue
         }
-        res.push(path)
-        console.log('path', path)
-         helper(start+1,nums,[...path,nums[i]],res)
-        
+        path.push(nums[i])
+        helper(i+1,nums,path,res)
+        path.pop()
       }
       
 
@@ -602,7 +602,7 @@ function SubsetsII(nums){
 
 
 
-let nums22=[1,2,2]
+let nums22=[1,2,3]
 console.log('SubsetsII', SubsetsII(nums22))
 
 
@@ -637,3 +637,90 @@ function ReversLink(head,m,n){
         pre.next=cur
     }
 }
+
+var subsetsWithDup = function(nums) {
+    var answer = [];
+    var stack = [];
+    nums = nums.sort();   
+    backtracking(stack, answer, nums, 0);
+    return answer;
+};
+
+function backtracking(stack, answer, arr, idx) {
+    answer.push(stack.slice());
+    for (let i = idx; i < arr.length; i++) {
+        if (i > idx && arr[i] === arr[i-1]) continue; 
+        stack.push(arr[i]);
+        console.log('stack1', stack)
+        backtracking(stack, answer, arr, i+1);
+        console.log('stack2', stack)
+        stack.pop();
+        console.log('stack3', stack)
+    }
+}
+let nums12=[1,2,2]
+console.log('subsetsWithDup', subsetsWithDup(nums12))
+
+let a=[1,2,3]
+ a.push(5)
+
+console.log('a', a)
+
+var merge = function(nums1, m, nums2, n) {
+  
+    let j=n-1
+    let len=m+n-1
+    while(j>=0 ){
+       if(nums1[i]>nums2[j]){
+           nums1[len]=nums1[i]
+           i--
+           len--
+       }
+       else{
+           nums1[len]=nums2[j]
+           j--
+           len--
+       }
+    }
+    return nums1
+    
+}
+/**
+98. Validate Binary Search Tree
+Given a binary tree, determine if it is a valid binary search tree (BST).
+
+Assume a BST is defined as follows:
+
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+ 
+
+Example 1:
+
+    2
+   / \
+  1   3
+
+Input: [2,1,3]
+Output: true
+ */
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+function TreeNode(val) {
+     this.val = val;
+     this.left = this.right = null;
+    }
+   let  root=TreeNode()
+var isValidBST = function(root) {
+    if(!root){return true}
+    if(root.left.val>root.right.val || root.val>root.right.val){return false}
+    return isValidBST(root.left)&& isValidBST(root.right)
+
+    
+};
