@@ -89,25 +89,25 @@ Follow up:
 A rather straight forward solution is a two-pass algorithm using counting sort.
 First, iterate the array counting number of 0's, 1's, and 2's, then overwrite array with total number of 0's, then 1's and followed by 2's.
 Could you come up with a one-pass algorithm using only constant space?
-  */
+ 
  //two ways:
  //count sort and one-pass 
  //solution one:
-//  var sortColors = function(nums) {
-//      let map={}
-//    for(let i=0;i<nums.length;i++){
-//        if(map[nums[i]]){map[nums[i]]+=1}
-//        else{map[nums[i]]=1}
+ var sortColors = function(nums) {
+     let map={}
+   for(let i=0;i<nums.length;i++){
+       if(map[nums[i]]){map[nums[i]]+=1}
+       else{map[nums[i]]=1}
        
-//        console.log(i,nums[i],map)
-//    }
-//    console.log(map[0])
-//    nums.nums.slice(0,map[0],0)
-//    console.log("nums",nums)
-    
-// };
-// let nums=[2,0,2,1,1,0]
-//  console.log("sortColors",sortColors(nums))
+       console.log(i,nums[i],map)
+   }
+   console.log(map[0])
+   nums.nums.slice(0,map[0],0)
+   console.log("nums",nums)
+    //没想到一次怎么置换multiple 个元素
+};
+let nums4=[2,0,2,1,1,0]
+ console.log("sortColors",sortColors(nums4))
 
 function sortColors2(nums){
     //aftermin 之前都是最小的，beforemax之后都是最大的，理清这两个
@@ -140,7 +140,7 @@ let nums=[2,0,1]
 console.log("sortColors2",sortColors2(nums))
 
 
-
+ */
 
 /**
  * 77. Combinations
@@ -578,7 +578,7 @@ Output:
   [1,2],
   []
 ] 
- */
+
 function SubsetsII(nums){
     nums.sort()
     let res=[]
@@ -605,7 +605,7 @@ function SubsetsII(nums){
 let nums22=[1,2,3]
 console.log('SubsetsII', SubsetsII(nums22))
 
-
+ */
 /**
  * 92. Reverse Linked List II
 Reverse a linked list from position m to n. Do it in one-pass.
@@ -616,7 +616,7 @@ Example:
 
 Input: 1->2->3->4->5->NULL, m = 2, n = 4
 Output: 1->4->3->2->5->NULL
- */
+
 function ReversLink(head,m,n){
     let dummy=new ListNode()
     dummy.next=head
@@ -685,6 +685,19 @@ var merge = function(nums1, m, nums2, n) {
     return nums1
     
 }
+ */
+
+ //新建bst
+ class TreeNode{
+     constructor(value){
+         this.value=value,
+         this.left=null
+         this.right=null
+
+     }
+ }
+ let t=new TreeNode(5)
+ console.log('t',t)
 /**
 98. Validate Binary Search Tree
 Given a binary tree, determine if it is a valid binary search tree (BST).
@@ -712,11 +725,11 @@ Output: true
  *     this.left = this.right = null;
  * }
  */
-function TreeNode(val) {
+function validTreeNode(val) {
      this.val = val;
      this.left = this.right = null;
     }
-   let  root=TreeNode()
+   let  root=validTreeNode()
 var isValidBST = function(root) {
     if(!root){return true}
     if(root.left.val>root.right.val || root.val>root.right.val){return false}
@@ -724,3 +737,166 @@ var isValidBST = function(root) {
 
     
 };
+
+/**
+ * 96. Unique Binary Search Trees
+
+Given n, how many structurally unique BST's (binary search trees) that store values 1 ... n?
+
+Example:
+
+Input: 3
+Output: 5
+Explanation:
+Given n = 3, there are a total of 5 unique BST's:
+
+   1         3     3      2      1
+    \       /     /      / \      \
+     3     2     1      1   3      2
+    /     /       \                 \
+   2     1         2                 3
+ 
+
+ function UniqueBST(n){
+     let arr=new Array(n+1)
+     arr.fill(0)
+     arr[1]=1;
+     arr[0]=1
+ 
+     for(let i=2;i<=n;i++){
+         for(let j=0;j<=i-1;j++){
+             arr[i]+=arr[j]*arr[i-j-1]
+            console.log('i', i,arr[i])
+         }
+     }
+     return arr[n]
+
+ }
+console.log(UniqueBST(3))
+*/
+ /**
+  * 101. Symmetric Tree
+Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+
+For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
+
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+ 
+
+But the following [1,2,2,null,3,null,3] is not:
+
+    1
+   / \
+  2   2
+   \   \
+   3    3
+  */
+ var isSymmetric1 = function(root) {
+    return helper(root, root)
+};
+
+const helper = function(p, q) {
+    if (p == null && q == null)
+        return true
+    if (p == null || q == null)
+        return false
+    return p.val == q.val && helper(p.left, q.right) && helper(p.right, q.left)
+}
+//  var isSymmetric = function(root) {
+//     if(root==null){return true}
+//     return helper(root.left,root.right)
+
+// }
+// function helper(p,q){
+//     console.log(p, q)
+//     if(q==null && p==null){return true}
+//     if(p==null || q==null){return false}
+//     return (p.val==q.val) && helper(p.left ,q.right)&&helper(p.right ,q.left)
+
+// }
+console.log('isSymmetric', isSymmetric1([1,2,3]))
+
+/**
+ * 104. Maximum Depth of Binary Tree
+Given a binary tree, find its maximum depth.
+
+The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+Note: A leaf is a node with no children.
+Example:
+Given binary tree [3,9,20,null,null,15,7],
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its depth = 3.
+ */
+ function MaximumDepthBST(root){
+    if(root==null){return 0}
+    helper(root,0)
+    function helper(root,depth){
+        if(root==null){
+            return depth
+        }
+      let dp1=helper(root.left,depth+1)
+       let dp2= helper(root.right,depth+1)
+       return Math.max(dp1,dp2)
+    }
+ }
+ let r=new TreeNode()
+ r=[3,9,20,null,null,15,7]
+ console.log('root', r)
+ console.log('MaximumDepthBST', MaximumDepthBST(r))
+//?????答案好难想....
+
+/** 
+121. Best Time to Buy and Sell Stock
+
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.
+
+Note that you cannot sell a stock before you buy one.
+
+Example 1:
+
+Input: [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+             Not 7-1 = 6, as selling price needs to be larger than buying price.
+Example 2:
+
+Input: [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transaction is done, i.e. max profit = 0.
+*/
+
+function  bestBuySell(nums) {
+    if(nums.length<2){return 0}
+    return helper(0,1,0,nums)
+    function helper(minindex,index,max,nums){
+        while(index<nums.length){
+            if(nums[index]-nums[minindex]<0){
+                minindex=index
+                index++
+            }
+            else{
+                let  dif=nums[index]-nums[minindex]
+                max=Math.max(max,dif)
+                index++
+            }
+            helper(minindex,index,max,nums)
+        }
+        return max
+
+    
+    }
+}
+
+let nums3= [7,18,4,3,1,0,3,1,3]
+console.log('bestBuySell', bestBuySell(nums3))
