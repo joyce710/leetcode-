@@ -835,7 +835,7 @@ Given binary tree [3,9,20,null,null,15,7],
     /  \
    15   7
 return its depth = 3.
- */
+
  function MaximumDepthBST(root){
     if(root==null){return 0}
     helper(root,0)
@@ -853,7 +853,7 @@ return its depth = 3.
  console.log('root', r)
  console.log('MaximumDepthBST', MaximumDepthBST(r))
 //?????答案好难想....
-
+*/
 /** 
 121. Best Time to Buy and Sell Stock
 
@@ -900,3 +900,178 @@ function  bestBuySell(nums) {
 
 let nums3= [7,18,4,3,1,0,3,1,3]
 console.log('bestBuySell', bestBuySell(nums3))
+
+/**
+ * 110. Balanced Binary Tree
+Easy
+
+1735
+
+146
+
+Add to List
+
+Share
+Given a binary tree, determine if it is height-balanced.
+
+For this problem, a height-balanced binary tree is defined as:
+
+a binary tree in which the left and right subtrees of every node differ in height by no more than 1.
+
+ 
+
+Example 1:
+
+Given the following tree [3,9,20,null,null,15,7]:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+Return true.
+
+Example 2:
+
+Given the following tree [1,2,2,3,3,null,null,4,4]:
+
+       1
+      / \
+     2   2
+    / \
+   3   3
+  / \
+ 4   4
+ false
+ */
+var isBalanced = function(root) {
+    if(!root){return true}
+     //console.log( (Math.abs((height(root.left)-height(root.right)))
+     //console.log(height(root.left), height(root.right))
+     if(Math.abs((height(root.left)-height(root.right)))>1){
+         return false
+     }
+     return isBalanced(root.left)&&isBalanced(root.right)
+ 
+ }
+ function height(lastroot){
+    // console.log('las', lastroot)
+     if(!lastroot){return 0}
+     return 1+Math.max(height(lastroot.left),height(lastroot.right))
+
+ }
+ let root2=new TreeNode()
+ root2=[1,2,2,3,3,null,null,4,4]
+ console.log('isBalancedTree', isBalanced(root2))
+//其实在计算深度的时候就已经遍历了每一个树枝 所以在这时候比较
+//为什么这个不对呢???
+var isBalanced=function(root){
+     
+    if(!root){return true}
+    console.log(  helper(root.left),helper(root.right),Math.abs(helper(root.left)-helper(root.right)))
+    return Math.abs(helper(root.left)-helper(root.right))<2
+    function helper(root){
+        if(!root){return 0}
+        left=helper(root.left)
+        right=helper(root.right)
+        if(Math.abs(left-right)>1){return false}
+        return 1+Math.max(left,right)
+    }
+
+
+}
+var isBalanced=function(root){
+     //???为什么console里有过false 最后还能return true 呢??  
+    if(!root){return true}
+    let balanced=true
+    helper(root,balanced)
+     console.log(  helper(root,balanced),balanced)
+     
+    return balanced
+   
+    function helper(root,balanced){
+        if(!root){return 0}
+        left=helper(root.left,balanced)
+        right=helper(root.right,balanced)
+       // console.log(root.left,left,root.right,left,right)
+        if(Math.abs(left-right)>1){
+            balanced=false
+           console.log(balanced)
+            return -1}
+        return 1+Math.max(left,right)
+    }
+
+
+}
+   
+
+/**
+ * 112. Path Sum
+
+
+Given the below binary tree and sum = 22,
+
+      5
+     / \
+    4   8
+   /   / \
+  11  13  4
+ /  \      \
+7    2      1
+return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
+ */
+var hasPathSum = function(root, sum) {  
+
+    return finder(0,root,sum)
+
+    function finder(cursum,root,sum){
+        if(!root){return false}
+        if(!root.left &&!root.right){
+            return sum==root.val+cursum
+        }
+      return finder(cursum+root.val,root.left,sum) || finder(cursum+root.val,root.right,sum)
+         
+      }
+    }
+console.log(true || false)
+/** 
+113. Path Sum II
+a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+
+Note: A leaf is a node with no children.
+
+Example:
+
+Given the below binary tree and sum = 22,
+
+      5
+     / \
+    4   8
+   /   / \
+  11  13  4
+ /  \    / \
+7    2  5   1
+Return:
+
+[
+   [5,4,11,2],
+   [5,8,4,5]
+]
+*/
+function psthSumII (root, sum){
+    let res=[]
+    
+    helper(root,sum,[],res)
+    return res
+    function helper(root ,sum,path,res){
+          if(!root){return []}
+          if(!root.left && !root.right&& root.val==sum ){
+            
+              res.push(path.concat(root.val))
+              return
+          }
+          if(root.left){helper(root.left,sum-root.val,path.concat(root.val),res)}
+          if(root.right){helper(root.right,sum-root.val,path.concat(root.val),res)}
+    }
+
+}
