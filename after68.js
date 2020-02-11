@@ -1075,3 +1075,37 @@ function psthSumII (root, sum){
     }
 
 }
+
+function symmetrictree(arr){
+    if(!root){return true}
+    return helper(root.left,root.right)
+    function helper(p,q){
+        if(!p && !q){return true}
+        if(!P||!q){return false}
+        return (p.val==q.val&& helper(p.left,q.right)&& helper(p.right,q.left))
+
+    }
+}
+function sorttobst(array){
+   len=arr.length
+   mid=Math.floor(len/2)
+   if(mid>0){
+   let node=new TreeNode(arr[mid])
+   node.left=sorttobst(arr.slice(0,mid))
+   node.right=sorttobst(arr.slice(mid+1,len))
+   }
+   return node
+}
+
+function BalancedBST(nums){
+    if(!nums){return true}
+   if((depth(root.left)-depth(root.right))>1){return false}
+   return BalancedBST(nums.left)&&BalancedBST(nums.right)
+    function depth(root){
+        if(!root){return 0}
+        return Math.max(depth(root.left),depth(root.right))+1
+
+    }
+
+}
+//z这一题的花花jie
