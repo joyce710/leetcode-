@@ -852,8 +852,66 @@ return its depth = 3.
  r=[3,9,20,null,null,15,7]
  console.log('root', r)
  console.log('MaximumDepthBST', MaximumDepthBST(r))
-//?????答案好难想....
+//?????答案好难想....https://www.youtube.com/watch?v=C75oWiy0bWM&t=474s leetcode110
 
+/**
+ * 
+ * @param {110. Balanced Binary Tree
+Given a binary tree, determine if it is height-balanced.
+
+For this problem, a height-balanced binary tree is defined as:
+
+a binary tree in which the left and right subtrees of every node differ in height by no more than 1.
+Example 1:
+
+Given the following tree [3,9,20,null,null,15,7]:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+Return true.} nums 
+ */
+
+
+/**
+ * 108. Convert Sorted Array to Binary Search Tree
+
+Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+
+For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
+
+Example:
+
+Given the sorted array: [-10,-3,0,5,9],
+
+One possible answer is: [0,-3,9,-10,null,5], which represents the following height balanced BST:
+
+      0
+     / \
+   -3   9
+   /   /
+ -10  5
+ */
+
+
+ function arrayToBST(nums){
+   
+     let  len = nums.length
+     if(len<=0){return null}
+     let mid=Math.floor(len/2)
+     //if(mid<=0){return null}
+     console.log("mid",mid,nums[mid])
+     let root =new TreeNode(nums[mid])
+     console.log(nums.slice(0,mid),nums.slice(mid+1))
+    root.left= arrayToBST(nums.slice(0,mid))
+    root.right=arrayToBST(nums.slice(mid+1))
+    return root
+
+ }
+ let numstt=[-10,-3,0,5,9]
+ console.log("arrayToBST",arrayToBST(numstt))
 /** 
 121. Best Time to Buy and Sell Stock
 
