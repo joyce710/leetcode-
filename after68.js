@@ -835,7 +835,7 @@ Given binary tree [3,9,20,null,null,15,7],
     /  \
    15   7
 return its depth = 3.
- */
+
  function MaximumDepthBST(root){
     if(root==null){return 0}
     helper(root,0)
@@ -852,6 +852,7 @@ return its depth = 3.
  r=[3,9,20,null,null,15,7]
  console.log('root', r)
  console.log('MaximumDepthBST', MaximumDepthBST(r))
+<<<<<<< HEAD
 //?????答案好难想....https://www.youtube.com/watch?v=C75oWiy0bWM&t=474s leetcode110
 
 /**
@@ -893,8 +894,7 @@ One possible answer is: [0,-3,9,-10,null,5], which represents the following heig
    -3   9
    /   /
  -10  5
- */
-
+ 
 
  function arrayToBST(nums){
    
@@ -912,6 +912,9 @@ One possible answer is: [0,-3,9,-10,null,5], which represents the following heig
  }
  let numstt=[-10,-3,0,5,9]
  console.log("arrayToBST",arrayToBST(numstt))
+
+//?????答案好难想....
+*/
 /** 
 121. Best Time to Buy and Sell Stock
 
@@ -958,3 +961,262 @@ function  bestBuySell(nums) {
 
 let nums3= [7,18,4,3,1,0,3,1,3]
 console.log('bestBuySell', bestBuySell(nums3))
+
+/**
+ * 110. Balanced Binary Tree
+Easy
+
+1735
+
+146
+
+Add to List
+
+Share
+Given a binary tree, determine if it is height-balanced.
+
+For this problem, a height-balanced binary tree is defined as:
+
+a binary tree in which the left and right subtrees of every node differ in height by no more than 1.
+
+ 
+
+Example 1:
+
+Given the following tree [3,9,20,null,null,15,7]:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+Return true.
+
+Example 2:
+
+Given the following tree [1,2,2,3,3,null,null,4,4]:
+
+       1
+      / \
+     2   2
+    / \
+   3   3
+  / \
+ 4   4
+ false
+ */
+var isBalanced = function(root) {
+    if(!root){return true}
+     //console.log( (Math.abs((height(root.left)-height(root.right)))
+     //console.log(height(root.left), height(root.right))
+     if(Math.abs((height(root.left)-height(root.right)))>1){
+         return false
+     }
+     return isBalanced(root.left)&&isBalanced(root.right)
+ 
+ }
+ function height(lastroot){
+    // console.log('las', lastroot)
+     if(!lastroot){return 0}
+     return 1+Math.max(height(lastroot.left),height(lastroot.right))
+
+ }
+ let root2=new TreeNode()
+ root2=[1,2,2,3,3,null,null,4,4]
+ console.log('isBalancedTree', isBalanced(root2))
+//其实在计算深度的时候就已经遍历了每一个树枝 所以在这时候比较
+//为什么这个不对呢???
+var isBalanced=function(root){
+     
+    if(!root){return true}
+    console.log(  helper(root.left),helper(root.right),Math.abs(helper(root.left)-helper(root.right)))
+    return Math.abs(helper(root.left)-helper(root.right))<2
+    function helper(root){
+        if(!root){return 0}
+        left=helper(root.left)
+        right=helper(root.right)
+        if(Math.abs(left-right)>1){return false}
+        return 1+Math.max(left,right)
+    }
+
+
+}
+var isBalanced=function(root){
+     //???为什么console里有过false 最后还能return true 呢??  
+    if(!root){return true}
+    let balanced=true
+    helper(root,balanced)
+     console.log(  helper(root,balanced),balanced)
+     
+    return balanced
+   
+    function helper(root,balanced){
+        if(!root){return 0}
+        left=helper(root.left,balanced)
+        right=helper(root.right,balanced)
+       // console.log(root.left,left,root.right,left,right)
+        if(Math.abs(left-right)>1){
+            balanced=false
+           console.log(balanced)
+            return -1}
+        return 1+Math.max(left,right)
+    }
+
+
+}
+   
+
+/**
+ * 112. Path Sum
+
+
+Given the below binary tree and sum = 22,
+
+      5
+     / \
+    4   8
+   /   / \
+  11  13  4
+ /  \      \
+7    2      1
+return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
+ */
+var hasPathSum = function(root, sum) {  
+
+    return finder(0,root,sum)
+
+    function finder(cursum,root,sum){
+        if(!root){return false}
+        if(!root.left &&!root.right){
+            return sum==root.val+cursum
+        }
+      return finder(cursum+root.val,root.left,sum) || finder(cursum+root.val,root.right,sum)
+         
+      }
+    }
+console.log(true || false)
+/** 
+113. Path Sum II
+a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+
+Note: A leaf is a node with no children.
+
+Example:
+
+Given the below binary tree and sum = 22,
+
+      5
+     / \
+    4   8
+   /   / \
+  11  13  4
+ /  \    / \
+7    2  5   1
+Return:
+
+[
+   [5,4,11,2],
+   [5,8,4,5]
+]
+*/
+function psthSumII (root, sum){
+    let res=[]
+    
+    helper(root,sum,[],res)
+    return res
+    function helper(root ,sum,path,res){
+          if(!root){return []}
+          if(!root.left && !root.right&& root.val==sum ){
+            
+              res.push(path.concat(root.val))
+              return
+          }
+          if(root.left){helper(root.left,sum-root.val,path.concat(root.val),res)}
+          if(root.right){helper(root.right,sum-root.val,path.concat(root.val),res)}
+    }
+
+}
+
+function symmetrictree(arr){
+    if(!root){return true}
+    return helper(root.left,root.right)
+    function helper(p,q){
+        if(!p && !q){return true}
+        if(!P||!q){return false}
+        return (p.val==q.val&& helper(p.left,q.right)&& helper(p.right,q.left))
+
+    }
+}
+function sorttobst(array){
+   len=arr.length
+   mid=Math.floor(len/2)
+   if(mid>0){
+   let node=new TreeNode(arr[mid])
+   node.left=sorttobst(arr.slice(0,mid))
+   node.right=sorttobst(arr.slice(mid+1,len))
+   }
+   return node
+}
+
+function BalancedBST(nums){
+    if(!nums){return true}
+   if((depth(root.left)-depth(root.right))>1){return false}
+   return BalancedBST(nums.left)&&BalancedBST(nums.right)
+    function depth(root){
+        if(!root){return 0}
+        return Math.max(depth(root.left),depth(root.right))+1
+
+    }
+
+}
+//z这一题的花花jie????????
+
+/**
+ * 109. Convert Sorted List to Binary Search Tree
+
+Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
+
+For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
+
+Example:
+
+Given the sorted linked list: [-10,-3,0,5,9],
+
+One possible answer is: [0,-3,9,-10,null,5], which represents the following height balanced BST:
+
+      0
+     / \
+   -3   9
+   /   /
+ -10  5
+ */
+//用快慢指针
+//下面这个解法不好
+ function linklistToBST(head){
+     let dummy=new ListNode()
+     console.log("head",head)
+     dummy.next=head
+     head1=head
+     let len=0
+     let mid=head
+     let pre=dummy
+     console.log("len",len)
+     if(len>0){
+     while(head1){
+        head1=head1.next
+        len++
+     }
+    for(let i=0;i<Math.floor(len/2);i++){
+      mid=mid.next
+      pre=pre.next
+
+    }
+    pre.next=null
+    console.log(mid.val,head.val,next.val)
+    let node=new TreeNode(mid.val)
+    node.left=linklistToBST(head)
+    node.right=linklistToBST(mid.next)
+     }
+     return node
+ }
+ //这题还有O(n)的算法 用stack 先存一遍
