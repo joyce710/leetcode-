@@ -936,7 +936,54 @@ Input: [7,6,4,3,1]
 Output: 0
 Explanation: In this case, no transaction is done, i.e. max profit = 0.
 */
+function bestBuySell1(nums) {
+    let price=0
+    let min=Infinity
+    for(let i=0;i<nums.length;i++){
+        console.log('i', i,nums[i])
+        if(
+            nums[i]<min){min=nums[i]
+            console.log(nums[i],min)}
+        else{price=Math.max(nums[i]-min,price)
+        console.log('price', price)}
+    }
+    return price
 
+}
+
+function bestBuySell2(nums){
+    let min=Infinity
+    let res=0
+    let max=0
+    for(let i=0;i<nums.length;i++){
+        if(nums[i]<nums[i-1]){
+            min=nums[i]
+            res+=max
+            max=0
+        }
+        else if(nums[i]<min){
+            min=nums[i]
+            res+=max
+            max=0
+        }
+        else{
+            max=Math.max(nums[i]-min,max)
+        }
+        console.log('i', i,nums[i],min,max)
+    }
+    if(nums[nums.length-1]>=nums[nums.length-2]){return res+max}
+    return res
+
+}
+function bestBuySell22(nums){
+    let res=0
+    for(let i=0;i<nums.length-1;i++){
+        if(nums[i+1]-nums[i]){
+            res+=nums[i+1]-nums[i]
+        }
+    }
+    return  res
+}
 function  bestBuySell(nums) {
     if(nums.length<2){return 0}
     return helper(0,1,0,nums)
@@ -959,8 +1006,8 @@ function  bestBuySell(nums) {
     }
 }
 
-let nums3= [7,18,4,3,1,0,3,1,3]
-console.log('bestBuySell', bestBuySell(nums3))
+let nums3= [1,9,6,9,1,7,1,1,5,9,9,9]
+console.log('bestBuySell1', bestBuySell2(nums3))
 
 /**
  * 110. Balanced Binary Tree
