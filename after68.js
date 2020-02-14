@@ -852,7 +852,6 @@ return its depth = 3.
  r=[3,9,20,null,null,15,7]
  console.log('root', r)
  console.log('MaximumDepthBST', MaximumDepthBST(r))
-<<<<<<< HEAD
 //?????答案好难想....https://www.youtube.com/watch?v=C75oWiy0bWM&t=474s leetcode110
 
 /**
@@ -1216,6 +1215,7 @@ function BalancedBST(nums){
     }
 
 }
+
 //z这一题的花花jie????????
 
 /**
@@ -1267,3 +1267,53 @@ One possible answer is: [0,-3,9,-10,null,5], which represents the following heig
      return node
  }
  //这题还有O(n)的算法 用stack 先存一遍
+//  def levelOrderBottom1(self, root):
+//  res = []
+//  self.dfs(root, 0, res)
+//  return res
+
+// def dfs(self, root, level, res):
+//  if root:
+//      if len(res) < level + 1:
+//          res.insert(0, [])
+//      res[-(level+1)].append(root.val)
+//      self.dfs(root.left, level+1, res)
+//      self.dfs(root.right, level+1, res)
+     
+
+function levelOrdertravesal(root){
+    if(!root){return []}
+    let res=[]
+    let queue=[root]
+    let cur=[]
+    while(queue.length>0){
+        for(let i=0;i<queue.length;i++){
+            let node=queue.shift()
+            cur.push(node.val)
+            if(node.left){queue.push(node.left)}
+            if(node.right){queue.push(node.right)}
+       }
+       res.push(cur)
+       cur=[]
+
+    }
+    return res
+
+
+}
+public void connect(TreeLinkNode root) {
+    for (TreeLinkNode head = root; head != null; ) {
+        TreeLinkNode nextHead = new TreeLinkNode(0), nextTail = nextHead;
+        for (TreeLinkNode node = head; node != null; node = node.next) {
+            if (node.left != null) {
+                nextTail.next = node.left;
+                nextTail = node.left;
+            }
+            if (node.right != null) {
+                nextTail.next = node.right;
+                nextTail = node.right;
+            }
+        }
+        head = nextHead.next;
+    }
+}
