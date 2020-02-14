@@ -80,26 +80,40 @@ Return the following binary tree:
    15   7
 
  */
-function construcTree(preorder,inorder){
-    console.log('33333')
-    if(!preorder.leghth || !inorder.leghth){return null}
+function buildTree(preorder,inorder){
+   
+    console.log('33333',preorder,preorder.length,inorder)
+  
+    if(preorder.length===0 || inorder.length===0) return null;
     console.log('22222')
     //let rootIndex=0;
     //function helper(preorder,inorder){
         let node=new TreeNode(preorder[0])
-        let divideIndex=inorder.indexOf(preorder[0])
-        leftinorder=inorder.slice(0,divideIndex)
-        rightinorder=inorder.slice(divideIndex+1)
-        console.log('leftinorder', leftinorder,rightinorder)
-        leftLen=left.leghth
-        leftpreorder=preorder.slice(1,1+leftLen)
-        rightpreorder=preorder.slice(1+leftLen+1)
-        node.left=construcTree(leftpreorder,leftinorder)
-        node.right=construcTree(rightpreorder,rightinorder)
-   
-    
+        console.log(node)
+        let pos=inorder.indexOf(preorder[0])
+        leftin=inorder.slice(0,pos)
+        rightin=inorder.slice(pos+1)
+        console.log('leftin', leftin,rightin)
+        leftpre=preorder.slice(1,1+pos)
+        rightpre=preorder.slice(pos+1)
+        node.left=buildTree(leftpre,leftin)
+        node.right=buildTree(rightpre,rightin)
+        return root
+
 }
 let preorder = [3,9,20,15,7]
 let inorder = [9,3,15,20,7]
-console.log('construcTree', construcTree(preorder,inorder))  
-  console.log('leftinorder')
+console.log('buildTree', buildTree(preorder,inorder))  
+var buildTree2 = function(p, i) {
+   
+        if(p.length===0 || i.length===0) {return null};
+        let val = p[0];
+        let pos = i.indexOf(val);//the root position, and also the number of left nodes
+        let root = new TreeNode(val);
+        root.left = buildTree2(p.slice(1, 1 + pos), i.slice(0, pos));
+        root.right = buildTree2(p.slice(1 + pos), i.slice(1 + pos));
+        return root;
+    
+    
+};
+console.log('buildTree22222', buildTree2(preorder,inorder))  
