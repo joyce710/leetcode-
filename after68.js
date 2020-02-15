@@ -209,7 +209,7 @@ Output:
   [1,2],
   []
 ]
- 
+   */
  function Subsets(nums){
      let res=[]
      helper(0,nums,[],res)
@@ -230,7 +230,9 @@ Output:
     return res
     }
     function generatePowerset(path, start,nums,res) {
-		res.push(path);
+        console.log('path', path)
+        res.push(path)
+		//if(path.length>0){res.push(path);}
 		for (let i = start; i < nums.length; i++) {
 			generatePowerset([...path, nums[i]], i + 1,nums,res);
 		}
@@ -239,8 +241,8 @@ Output:
 }
  let nums=[1,2,3]
 
- console.log('Subsets', Subsets(nums))
-  */
+ console.log('Subsets', Subsets2(nums))
+
 /**
  * 71. Simplify Path
 Given an absolute path for a file (Unix-style), simplify it. Or in other words, convert it to the canonical path.
@@ -794,7 +796,7 @@ But the following [1,2,2,null,3,null,3] is not:
   2   2
    \   \
    3    3
-  */
+ 
  var isSymmetric1 = function(root) {
     return helper(root, root)
 };
@@ -806,6 +808,7 @@ const helper = function(p, q) {
         return false
     return p.val == q.val && helper(p.left, q.right) && helper(p.right, q.left)
 }
+
 //  var isSymmetric = function(root) {
 //     if(root==null){return true}
 //     return helper(root.left,root.right)
@@ -819,7 +822,7 @@ const helper = function(p, q) {
 
 // }
 console.log('isSymmetric', isSymmetric1([1,2,3]))
-
+ */
 /**
  * 104. Maximum Depth of Binary Tree
 Given a binary tree, find its maximum depth.
@@ -1300,20 +1303,4 @@ function levelOrdertravesal(root){
     return res
 
 
-}
-public void connect(TreeLinkNode root) {
-    for (TreeLinkNode head = root; head != null; ) {
-        TreeLinkNode nextHead = new TreeLinkNode(0), nextTail = nextHead;
-        for (TreeLinkNode node = head; node != null; node = node.next) {
-            if (node.left != null) {
-                nextTail.next = node.left;
-                nextTail = node.left;
-            }
-            if (node.right != null) {
-                nextTail.next = node.right;
-                nextTail = node.right;
-            }
-        }
-        head = nextHead.next;
-    }
 }

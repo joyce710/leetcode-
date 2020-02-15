@@ -79,7 +79,7 @@ Return the following binary tree:
     /  \
    15   7
 
- */
+
 function buildTree(preorder,inorder){
    
     console.log('33333',preorder,preorder.length,inorder)
@@ -117,3 +117,63 @@ var buildTree2 = function(p, i) {
     
 };
 console.log('buildTree22222', buildTree2(preorder,inorder))  
+ */
+/**
+ * 131. Palindrome Partitioning
+Given a string s, partition s such that every substring of the partition is a palindrome.
+
+Return all possible palindrome partitioning of s.
+
+Example:
+
+Input: "aab"
+Output:
+[
+  ["aa","b"],
+  ["a","a","b"]
+]
+ */
+
+//  function palindromePart(str){
+//      let res=[]
+//      helper(0,[],str,res)
+//     console.log('res', res)
+//      function helper(start,path,str,res){
+//         console.log('path',start,path, str[start],str)
+//         res.push(path)
+//          for(let i=start;i<str.length;i++){
+//             // if(str[i]==str[i-1]){continue}
+//             //console.log('path', i,typeof(path),res)
+//             // path+=str[i]
+//             //res.push(path)
+//             //  if(path.length>0 && path.split().reverse().toString()==path.toString()){
+//             //      res.push(path)}
+            
+//              helper(i+1,[...path,str[i]],str,res)
+            
+//          }
+//      }
+//      return res
+// }
+function palindromePart1(str){
+    let res=[]
+    helper(path,str)
+    function helper(path,str){
+    
+
+    }
+    function isPalindrome(str){
+       return str.split().reverse().toString()===str
+    }
+
+}
+function isPalindrome(str){
+    console.log('str', str.split('').reverse().join(''),str)
+    return str.split('').reverse().toString()==str
+ }
+
+
+
+ let str="aa"
+ console.log('isPalindrome', isPalindrome(str))
+ //console.log('palindromePart',palindromePart(str)) 
