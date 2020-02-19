@@ -177,3 +177,207 @@ function isPalindrome(str){
  let str="aa"
  console.log('isPalindrome', isPalindrome(str))
  //console.log('palindromePart',palindromePart(str)) 
+/**
+ * 129. Sum Root to Leaf Numbers
+Given a binary tree containing digits from 0-9 only, each root-to-leaf path could represent a number.
+
+An example is the root-to-leaf path 1->2->3 which represents the number 123.
+
+Find the total sum of all root-to-leaf numbers.
+
+Note: A leaf is a node with no children.
+
+Example:
+
+Input: [1,2,3]
+    1
+   / \
+  2   3
+Output: 25
+Explanation:
+The root-to-leaf path 1->2 represents the number 12.
+The root-to-leaf path 1->3 represents the number 13.
+Therefore, sum = 12 + 13 = 25.
+Example 2:
+
+Input: [4,9,0,5,1]
+    4
+   / \
+  9   0
+ / \
+5   1
+Output: 1026
+Explanation:
+The root-to-leaf path 4->9->5 represents the number 495.
+The root-to-leaf path 4->9->1 represents the number 491.
+The root-to-leaf path 4->0 represents the number 40.
+Therefore, sum = 495 + 491 + 40 = 1026.
+
+var sumNumbers = function(root) {
+    let res=[]
+    if(!root){return 0}
+    helper(root,0,res)
+    function helper(root,path,res){
+        console.log(root.val,path,res)
+        if(root==null){
+            console.log("path2",path)
+            res.push(path)}
+        path=path*10+root.val
+        res
+        console.log(path)
+        console.log(root,root.left)
+        if(root.left){helper(root.left,path,res)}
+        if(root.right){helper(root.right,path,res)}
+    }
+    return res
+};
+ */
+/**
+ * 136. Single Number
+
+Given a non-empty array of integers, every element appears twice except for one. Find that single one.
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
+Example 1:
+
+Input: [2,2,1]
+Output: 1
+Example 2:
+
+Input: [4,1,2,1,2]
+Output: 4
+ */
+function singleNum(nums){
+    let map=new Map()
+    for(let i=0;i<nums.length;i++){
+       //console.log('map', nums[i],map.get(nums[i]))
+        if(map.get(nums[i])){
+            let value=map.get(nums[i])
+            value++
+      map.set(nums[i],value)
+            }
+        else{map.set(nums[i],1)}
+    }
+  map.forEach((value,key)=>{
+      //if(value==2){return key}
+      //console.log('keyvalue', key,value)
+      if(value==1){console.log('key', key)}
+    }
+      )
+   
+
+
+}
+let nums=[4,1,2,1,2]
+console.log('snglenums', singleNum(nums))
+
+function singleNum2(){
+    let res=0
+    for(let i=0;i<nums.length;i++){
+        res=res^nums[i]
+    }
+    return res
+}
+console.log('snglenums', singleNum2(nums))
+
+function BTreeLeveltravesal(root){
+    if(!root){return}
+    let res=[]
+    let queue=[root]
+    let cur=[]
+
+        while(queue.length>0){
+            let size=queue.length
+            for(let i=0;i<size;i++){
+                let node=queue.shift()
+                cur.push(node.val)
+                if(node.left){queue.push(node.left)}
+                if(node.right){queue.push(node.right)}
+            }
+            res.push(cur)
+            cur=[]
+        //    cur.forEach( node=>{
+        //        curval.push(node.val)
+        //        if(node.left){
+        //            next.push(cur.left)
+        //        }
+        //        if(node.right){
+        //            next.push(node.right)
+        //        }
+        //    })
+        //    res.unshift(curval)
+        //    curval=[]
+        //    cur=next
+        //    next=[]
+
+        }
+        
+    return res
+         
+    }
+function BTreeLeveltravesal2(root){
+    if(!root){return }
+   let res=[]
+   helper(0,root,res)
+   return res
+   function helper(level,node,res){
+       while(level>=res.length){
+           res.push([])
+       }
+       res[level].push(root.val)
+       if(root.left){helper(level+1,node.left,res)}
+       if(root.right){helper(level+1,node.right,res)}
+
+   }
+}
+
+/**
+ * 199. Binary Tree Right Side View
+
+Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+
+Example:
+
+Input: [1,2,3,null,5,null,4]
+Output: [1, 3, 4]
+Explanation:
+
+   1            <---
+ /   \
+2     3         <---
+ \     \
+  5     4       <---
+ */
+function btreeRightSide(root){
+    if(!root){return}
+    let queue=[root]
+    let res=[]
+    while(queue.length>0){
+        let size=queue.length
+        for(let i=0;i<size;i++){
+        let node=queue.pop()
+        if(i==0)res.push(node.val)
+        if(node.left){queue.push(node.left)}
+        if(node.right){queue.push(node.right)}
+    }
+    }
+    return res
+}
+function btreeRightSide2(root){
+    if(!root){return []}
+    let res=[]
+    let ret=[]
+    helper(root,0,res,ret)
+  function  helper(node,level,res,ret){
+      if(level<=res.length){res.push([])}
+      if(level=res.length){ret.push(node.val)}
+      res[level].push(node)
+      if(node.right){helper(node.right,level+1,res)}
+      if(node.left){helper(node.left,level+1,res,ret)}
+  
+
+    }
+    return ret
+
+
+}
