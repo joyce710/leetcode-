@@ -348,21 +348,8 @@ Explanation:
  \     \
   5     4       <---
  */
-function btreeRightSide(root){
-    if(!root){return}
-    let queue=[root]
-    let res=[]
-    while(queue.length>0){
-        let size=queue.length
-        for(let i=0;i<size;i++){
-        let node=queue.pop()
-        if(i==0)res.push(node.val)
-        if(node.left){queue.push(node.left)}
-        if(node.right){queue.push(node.right)}
-    }
-    }
-    return res
-}
+
+
 function btreeRightSide2(root){
     if(!root){return []}
     let res=[]
@@ -379,5 +366,53 @@ function btreeRightSide2(root){
     }
     return ret
 
+
+}
+
+function closuretimeout(){
+   function timer(j){
+       
+            setTimeout(()=>{
+                console.log('j', j)
+            },1000*j)
+    }
+ for(var i=0;i<5;i++){
+     timer(i)
+ }
+ setTimeout(()=>{
+     console.log('i', i)
+ },1000*i)
+}
+//console.log('closuretimeout', closuretimeout())
+
+function colsure(){
+    function helper(j){
+        setTimeout(()=>{
+            console.log('i', j)
+        },1000)
+
+    }
+    for(var i=0;i<5;i++){
+       helper(i)
+    }
+    console.log('i', i)
+
+}
+//console.log('colsure', colsure())
+
+
+    function doo(){
+        for(let i=0;i<5;i++){
+            console.log('i', i)
+        }
+     }
+       var timer=setInterval(doo,1000)
+       function stop(){ clearInterval(timer)}
+    
+
+
+console.log('interval', stop())
+
+async ()=>{
 
 }
